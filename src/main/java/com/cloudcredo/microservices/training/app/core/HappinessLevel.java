@@ -1,4 +1,4 @@
-package microservices.training.app.core;
+package com.cloudcredo.microservices.training.app.core;
 
 /**
  * Created by work on 11/09/15.

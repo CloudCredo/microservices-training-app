@@ -1,7 +1,7 @@
-package microservices.training.app.persistence;
+package com.cloudcredo.microservices.training.app.persistence;
 
-import microservices.training.app.core.Feedback;
-import microservices.training.app.core.HappinessLevel;
+import com.cloudcredo.microservices.training.app.core.Feedback;
+import com.cloudcredo.microservices.training.app.core.HappinessLevel;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ConcurrentHashMap;

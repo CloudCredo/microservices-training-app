@@ -1,4 +1,4 @@
-package microservices.training.app.rest;
+package com.cloudcredo.microservices.training.app.rest;
 
 /**
  * Created by work on 11/09/15.

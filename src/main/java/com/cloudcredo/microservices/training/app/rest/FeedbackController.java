@@ -1,9 +1,9 @@
-package microservices.training.app.rest;
+package com.cloudcredo.microservices.training.app.rest;
 
-import microservices.training.app.core.Feedback;
-import microservices.training.app.core.HappinessLevel;
-import microservices.training.app.core.LearningLevel;
-import microservices.training.app.core.FeedbackService;
+import com.cloudcredo.microservices.training.app.core.Feedback;
+import com.cloudcredo.microservices.training.app.core.FeedbackService;
+import com.cloudcredo.microservices.training.app.core.HappinessLevel;
+import com.cloudcredo.microservices.training.app.core.LearningLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -1,4 +1,4 @@
-package microservices.training.app;
+package com.cloudcredo.microservices.training.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

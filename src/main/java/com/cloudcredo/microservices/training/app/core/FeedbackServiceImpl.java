@@ -1,6 +1,6 @@
-package microservices.training.app.core;
+package com.cloudcredo.microservices.training.app.core;
 
-import microservices.training.app.persistence.FeedbackPersistenceService;
+import com.cloudcredo.microservices.training.app.persistence.FeedbackPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

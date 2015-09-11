@@ -1,6 +1,6 @@
-package microservices.training.app.persistence;
+package com.cloudcredo.microservices.training.app.persistence;
 
-import microservices.training.app.core.Feedback;
+import com.cloudcredo.microservices.training.app.core.Feedback;
 
 /**
  * Created by work on 11/09/15.
