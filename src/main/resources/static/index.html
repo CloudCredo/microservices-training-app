@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Hello AngularJS</title>
+    <link href="css/angular-bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body ng-app="feedback">
+    <div class="container">
+      <h1>Microservices on Cloud Foundry: Going Cloud Native</h1>
+
+      <div ng-cloak class="ng-cloak">
+        <p>Thanks for attending our training session! We hope you're having fun.</p>
+        <p>We're really keen to get your feedback so please rate your experience so far.</p>
+
+        <div id="feedback-submission-form" class="container" ng-if="!feedbackSubmitted">
+          <form name="feedbackForm" ng-controller="FeedbackFormController">
+            <h3>Your happiness with the training so far:</h3>
+            <label>
+              <input type="radio" ng-model="feedback.happinessLevel" value="0">
+              This sucks!
+            </label><br/>
+            <label>
+              <input type="radio" ng-model="feedback.happinessLevel" value="1">
+              A bit miserable
+            </label><br/>
+            <label>
+              <input type="radio" ng-model="feedback.happinessLevel" value="2">
+              Meh
+            </label>
+            <label>
+              <input type="radio" ng-model="feedback.happinessLevel" value="2">
+              Pretty good
+            </label>
+            <label>
+              <input type="radio" ng-model="feedback.happinessLevel" value="2">
+              Awesome!
+            </label>
+
+            <h3>How much do you feel you've learnt so far?</h3>
+            <label>
+              <input type="radio" ng-model="feedback.happinessLevel" value="0">
+              Nothing!
+            </label><br/>
+            <label>
+              <input type="radio" ng-model="feedback.happinessLevel" value="1">
+              A little
+            </label><br/>
+            <label>
+              <input type="radio" ng-model="feedback.happinessLevel" value="2">
+              Soaking up new knowledge like a sponge!
+            </label>
+
+            <button ng-click="submitFeedback">Submit</button>
+          </form>
+        </div>
+
+        <div id="aggregated-feedback" class="container" controller="AggregatedFeedbackController">
+          <div class="container">
+            <h3>Overall happiness</h3>
+            <p>This sucks!: {{aggregatedFeedback.happiness[0]}} %</p>
+            <p>A bit miserable: {{aggregatedFeedback.happiness[1]}} %</p>
+            <p>Meh: {{aggregatedFeedback.happiness[2]}} %</p>
+            <p>Pretty good: {{aggregatedFeedback.happiness[3]}} %</p>
+            <p>Awesome!: {{aggregatedFeedback.happiness[4]}} %</p>
+          </div>
+          <div class="container">
+            <h3>Overall learning</h3>
+              <p>Nothing!: {{aggregatedFeedback.learning[0]}}%</p>
+              <p>A little: {{aggregatedFeedback.learning[1]}}%</p>
+              <p>Soaking up new knowledge like a sponge!: {{aggregatedFeedback.learning[2]}}%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+  </body>
+</html>
