@@ -1,4 +1,4 @@
-angular.module('controllers', ['services'])
+angular.module('feedbackForm', ['feedbackService', 'aggregatedFeedback'])
   .controller('FeedbackFormController', function($scope, FeedbackService) {
     function submitFeedback() {
       FeedbackService.submitFeedback($scope.feedback);
@@ -11,12 +11,4 @@ angular.module('controllers', ['services'])
     };
     $scope.feedbackSubmitted = false;
     $scope.submitFeedback = submitFeedback;
-  })
-
-  .controller('AggregatedFeedbackController', function($scope, $interval, FeedbackService) {
-    function updateAggregatedFeedback() {
-      $scope.aggregatedFeedback = FeedbackService.getAggregatedFeedback();
-    }
-
-    $interval(updateAggregatedFeedback, 3000)
   });

@@ -1,4 +1,4 @@
-angular.module('services', [])
+angular.module('feedbackService', [])
   .factory('FeedbackService', function () {
     return {
       getAggregatedFeedback: function () {
