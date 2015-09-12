@@ -5,7 +5,8 @@ package com.cloudcredo.microservices.training.app.core;
  */
 public interface FeedbackService {
 
-    AggregatedFeedback getAggregatedFeedback();
-    void storeFeedback(Feedback feedback);
+  AggregatedFeedback getAggregatedFeedback();
+
+  void storeFeedback(Feedback feedback);
 
 }

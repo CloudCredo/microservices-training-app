@@ -1,12 +1,14 @@
-angular.module('feedbackService', [])
-  .factory('FeedbackService', function () {
+angular.module('feedbackService', ['aggregatedFeedback', 'ngResource'])
+  .factory('FeedbackService', function ($resource) {
+    var feedback_endpoint = $resource('/feedback');
+
     return {
       getAggregatedFeedback: function () {
-        // TODO fetch current aggregated feedback from the server
+        return feedback_endpoint.get()
       },
 
       submitFeedback: function (feedback) {
-        // TODO submit a user's feedback to the server
+        feedback_endpoint.save(feedback)
       }
     }
   });

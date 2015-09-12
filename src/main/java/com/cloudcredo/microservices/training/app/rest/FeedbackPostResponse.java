@@ -1,16 +1,17 @@
 package com.cloudcredo.microservices.training.app.rest;
 
-/**
- * Created by work on 11/09/15.
- */
 class FeedbackPostResponse {
-    private String status = "unknown";
+  private final String status;
 
-    private FeedbackPostResponse(String status) {
-        this.status = status;
-    }
+  private FeedbackPostResponse(String status) {
+    this.status = status;
+  }
 
-    public static FeedbackPostResponse ok() {
-        return new FeedbackPostResponse("ok");
-    }
+  public static FeedbackPostResponse ok() {
+    return new FeedbackPostResponse("ok");
+  }
+
+  public String getStatus() {
+    return status;
+  }
 }

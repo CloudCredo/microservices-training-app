@@ -1,9 +1,22 @@
 package com.cloudcredo.microservices.training.app.rest;
 
-/**
- * Created by work on 11/09/15.
- */
 class FeedbackPostRequest {
-    public int happinessLevel;
-    public int learningLevel;
+  private int happinessLevel;
+  private int learningLevel;
+
+  public int getHappinessLevel() {
+    return happinessLevel;
+  }
+
+  public void setHappinessLevel(int happinessLevel) {
+    this.happinessLevel = happinessLevel;
+  }
+
+  public int getLearningLevel() {
+    return learningLevel;
+  }
+
+  public void setLearningLevel(int learningLevel) {
+    this.learningLevel = learningLevel;
+  }
 }

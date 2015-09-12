@@ -1,25 +1,27 @@
 package com.cloudcredo.microservices.training.app.core;
 
-/**
- * Created by work on 11/09/15.
- */
 public class Feedback {
-    private LearningLevel learningLevel;
-    private HappinessLevel happinessLevel;
+  private HappinessLevel happinessLevel;
+  private LearningLevel learningLevel;
 
-    public LearningLevel getLearningLevel() {
-        return learningLevel;
-    }
+  public HappinessLevel getHappinessLevel() {
+    return happinessLevel;
+  }
 
-    public void setLearningLevel(LearningLevel learningLevel) {
-        this.learningLevel = learningLevel;
-    }
+  public void setHappinessLevel(HappinessLevel happinessLevel) {
+    this.happinessLevel = happinessLevel;
+  }
 
-    public HappinessLevel getHappinessLevel() {
-        return happinessLevel;
-    }
+  public LearningLevel getLearningLevel() {
+    return learningLevel;
+  }
 
-    public void setHappinessLevel(HappinessLevel happinessLevel) {
-        this.happinessLevel = happinessLevel;
-    }
+  public void setLearningLevel(LearningLevel learningLevel) {
+    this.learningLevel = learningLevel;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("[%1$s, %2$s]", happinessLevel, learningLevel);
+  }
 }

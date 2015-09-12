@@ -1,15 +1,17 @@
 angular.module('aggregatedFeedback', ['feedbackService'])
   .value('AggregatedFeedbackModel', {
-    happiness: [0, 0, 0, 0, 0],
-    learning: [0, 0, 0]
+    feedback: {
+      happiness: [0, 0, 0, 0, 0],
+      learning: [0, 0, 0]
+    }
   })
 
   .controller('AggregatedFeedbackController', function($scope, $interval, FeedbackService, AggregatedFeedbackModel) {
     function updateAggregatedFeedback() {
-      //$scope.aggregatedFeedback = FeedbackService.getAggregatedFeedback();
+      AggregatedFeedbackModel.feedback = FeedbackService.getAggregatedFeedback();
     }
 
-    $scope.aggregatedFeedback = AggregatedFeedbackModel;
+    $scope.aggregatedFeedback = AggregatedFeedbackModel.feedback;
 
     $interval(updateAggregatedFeedback, 3000)
   });

@@ -55,7 +55,7 @@
               <input type="radio" ng-model="feedback.learningLevel" value="2">
               Soaking up new knowledge like a sponge!
             </label><br/>
-            <button ng-click="submitFeedback">Submit</button>
+            <button ng-click="submitFeedback()">Submit</button>
           </form>
         </div>
 
@@ -79,6 +79,7 @@
     </div>
 
     <script src="/webjars/angularjs/1.4.4/angular.js"></script>
+    <script src="/webjars/angularjs/1.4.4/angular-resource.js"></script>
     <script src="js/aggregated-feedback.js"></script>
     <script src="js/feedback-form.js"></script>
     <script src="js/feedback-service.js"></script>
