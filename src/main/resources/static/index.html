@@ -22,37 +22,37 @@
           <form name="feedbackForm" ng-controller="FeedbackFormController">
             <h3>Your happiness with the training so far:</h3>
             <label>
-              <input type="radio" ng-model="feedback.happinessLevel" value="0">
+              <input type="radio" ng-model="feedback.happinessLevel" ng-value="0">
               This sucks!
             </label><br/>
             <label>
-              <input type="radio" ng-model="feedback.happinessLevel" value="1">
+              <input type="radio" ng-model="feedback.happinessLevel" ng-value="1">
               A bit miserable
             </label><br/>
             <label>
-              <input type="radio" ng-model="feedback.happinessLevel" value="2">
+              <input type="radio" ng-model="feedback.happinessLevel" ng-value="2">
               Meh
             </label><br/>
             <label>
-              <input type="radio" ng-model="feedback.happinessLevel" value="3">
+              <input type="radio" ng-model="feedback.happinessLevel" ng-value="3">
               Pretty good
             </label><br/>
             <label>
-              <input type="radio" ng-model="feedback.happinessLevel" value="4">
+              <input type="radio" ng-model="feedback.happinessLevel" ng-value="4">
               Awesome!
             </label>
 
             <h3>How much do you feel you've learnt so far?</h3>
             <label>
-              <input type="radio" ng-model="feedback.learningLevel" value="0">
+              <input type="radio" ng-model="feedback.learningLevel" ng-value="0">
               Nothing!
             </label><br/>
             <label>
-              <input type="radio" ng-model="feedback.learningLevel" value="1">
+              <input type="radio" ng-model="feedback.learningLevel" ng-value="1">
               A little
             </label><br/>
             <label>
-              <input type="radio" ng-model="feedback.learningLevel" value="2">
+              <input type="radio" ng-model="feedback.learningLevel" ng-value="2">
               Soaking up new knowledge like a sponge!
             </label><br/>
             <button ng-click="submitFeedback()">Submit</button>
