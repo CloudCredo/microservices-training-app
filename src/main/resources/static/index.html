@@ -61,8 +61,12 @@
 
         <div id="aggregated-feedback" class="container" ng-controller="AggregatedFeedbackController" ng-show="feedbackSubmission.submitted">
           <div class="row">
-            <p>Thanks for voting!</p>
-            <p>Here are the results so far:</p>
+            <h3>Thanks for voting!</h3>
+            <p>
+              There {{aggregatedFeedback.totalVotes === 1 ? 'has' : 'have'}} been
+              {{aggregatedFeedback.totalVotes}} vote{{aggregatedFeedback.totalVotes === 1 ? '' : 's'}}
+              cast so far
+            </p>
           </div>
 
           <div class="row">

@@ -9,24 +9,30 @@ angular.module('aggregatedFeedback', ['feedbackService', 'feedbackLevels', 'feed
 
     return {
       happinessLevels: FeedbackLevels.happinessLevels.map(toModel),
-      learningLevels: FeedbackLevels.learningLevels.map(toModel)
+      learningLevels: FeedbackLevels.learningLevels.map(toModel),
+      totalVotes: 0
     }
   })
 
   .controller('AggregatedFeedbackController', function($scope, $interval, FeedbackService, AggregatedFeedbackModel, FeedbackSubmissionModel) {
     function updateAggregatedFeedback() {
-      function totalVotes(voteArray) {
+      function sumVotes(voteArray) {
         return voteArray.reduce(function (sum, value) {
           return sum + value;
         })
       }
 
       function updateModelVotes(modelArray, voteArray) {
-        var numberOfVotes = totalVotes(voteArray);
-        if (numberOfVotes === 0) return;
+        // Arbitrary vote array can be used to calculate total votes since
+        // it's not possible to vote without specifying a value for all vote
+        // types
+        var totalVotes = sumVotes(voteArray);
+        AggregatedFeedbackModel.totalVotes = totalVotes;
+
+        if (totalVotes === 0) return;
 
         for (var i = 0; i < modelArray.length; i++) {
-          modelArray[i].votePercentage = voteArray[i] * 100 / numberOfVotes;
+          modelArray[i].votePercentage = voteArray[i] * 100 / totalVotes;
         }
       }
 
@@ -38,5 +44,6 @@ angular.module('aggregatedFeedback', ['feedbackService', 'feedbackLevels', 'feed
 
     $scope.aggregatedFeedback = AggregatedFeedbackModel;
     $scope.feedbackSubmission = FeedbackSubmissionModel;
+
     $interval(updateAggregatedFeedback, 1000)
   });
