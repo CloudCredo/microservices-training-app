@@ -62,17 +62,11 @@
         <div id="aggregated-feedback" class="container" ng-controller="AggregatedFeedbackController">
           <div class="container">
             <h3>Overall happiness</h3>
-            <p>This sucks!: {{aggregatedFeedback.happiness[0]}}%</p>
-            <p>A bit miserable: {{aggregatedFeedback.happiness[1]}}%</p>
-            <p>Meh: {{aggregatedFeedback.happiness[2]}}%</p>
-            <p>Pretty good: {{aggregatedFeedback.happiness[3]}}%</p>
-            <p>Awesome!: {{aggregatedFeedback.happiness[4]}}%</p>
+            <p ng-repeat="level in aggregatedFeedback.happinessLevels">{{level.description}}: {{level.votes}}</p>
           </div>
           <div class="container">
             <h3>Overall learning</h3>
-            <p>Nothing!: {{aggregatedFeedback.learning[0]}}%</p>
-            <p>A little: {{aggregatedFeedback.learning[1]}}%</p>
-            <p>Soaking up new knowledge like a sponge!: {{aggregatedFeedback.learning[2]}}%</p>
+            <p ng-repeat="level in aggregatedFeedback.learningLevels">{{level.description}}: {{level.votes}}</p>
           </div>
         </div>
       </div>
