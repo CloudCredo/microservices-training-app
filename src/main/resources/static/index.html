@@ -11,9 +11,14 @@
   </head>
 
   <body ng-app="feedback">
-    <div class="container">
-      <h1>Microservices on Cloud Foundry: Going Cloud Native</h1>
+    <div class="jumbotron">
+      <div class="container">
+        <h2>Microservices on Cloud Foundry: Going Cloud Native</h2>
+        <p>Application version 1: The Monolith</p>
+      </div>
+    </div>
 
+    <div class="container">
       <div ng-cloak class="ng-cloak">
         <div id="feedback-submission-form" class="container" ng-controller="FeedbackFormController" ng-hide="feedbackSubmission.submitted">
           <div class="row">
@@ -25,28 +30,30 @@
             <div class="row">
               <div class="col-xs-6">
                 <h3>Your happiness with the training so far:</h3>
-                <span ng-repeat="level in feedbackLevels.happinessLevels">
+                <div class="radio" ng-repeat="level in feedbackLevels.happinessLevels">
                   <label>
                     <input type="radio" ng-model="feedback.happinessLevel" ng-value="level.index">
                     {{level.description}}
                   </label><br>
-                </span>
+                </div>
               </div>
 
               <div class="col-xs-6">
                 <h3>How much do you feel you've learnt so far?</h3>
-                <span ng-repeat="level in feedbackLevels.learningLevels">
+                <div class="radio" ng-repeat="level in feedbackLevels.learningLevels">
                   <label>
                     <input type="radio" ng-model="feedback.learningLevel" ng-value="level.index">
                     {{level.description}}
                   </label><br>
-                </span>
+                </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-xs-12">
-                <button ng-click="submitFeedback()">Submit</button>
+                <p>
+                  <button class="btn btn-primary" ng-click="submitFeedback()">Submit</button>
+                </p>
               </div>
             </div>
           </form>
