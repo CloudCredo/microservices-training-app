@@ -22,6 +22,9 @@ public class Feedback {
 
   @Override
   public String toString() {
-    return String.format("[%1$s, %2$s]", happinessLevel, learningLevel);
+    return "Feedback{" +
+      "happinessLevel=" + happinessLevel +
+      ", learningLevel=" + learningLevel +
+      '}';
   }
 }

@@ -2,6 +2,7 @@ package com.cloudcredo.microservices.training.app.rest;
 
 import com.cloudcredo.microservices.training.app.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ public class FeedbackController {
   }
 
   @RequestMapping(method = RequestMethod.POST)
-  public FeedbackPostResponse getFeedback(FeedbackPostRequest request) {
+  public FeedbackPostResponse storeFeedback(@RequestBody FeedbackPostRequest request) {
     Feedback feedback = new Feedback();
     feedback.setHappinessLevel(HappinessLevel.values()[request.getHappinessLevel()]);
     feedback.setLearningLevel(LearningLevel.values()[request.getLearningLevel()]);

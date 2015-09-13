@@ -4,6 +4,7 @@ import com.cloudcredo.microservices.training.app.core.AggregatedFeedback;
 import com.cloudcredo.microservices.training.app.core.HappinessLevel;
 import com.cloudcredo.microservices.training.app.core.LearningLevel;
 
+import java.util.Arrays;
 import java.util.Map;
 
 class FeedbackGetResponse {
@@ -28,6 +29,14 @@ class FeedbackGetResponse {
 
   public int[] getLearning() {
     return learning;
+  }
+
+  @Override
+  public String toString() {
+    return "FeedbackGetResponse{" +
+      "happiness=" + Arrays.toString(happiness) +
+      ", learning=" + Arrays.toString(learning) +
+      '}';
   }
 
   private static <T extends Enum<T>> void extractFeedback(Map<T, Integer> source, int[] target) {

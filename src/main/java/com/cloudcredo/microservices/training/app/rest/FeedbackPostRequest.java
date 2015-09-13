@@ -19,4 +19,12 @@ class FeedbackPostRequest {
   public void setLearningLevel(int learningLevel) {
     this.learningLevel = learningLevel;
   }
+
+  @Override
+  public String toString() {
+    return "FeedbackPostRequest{" +
+      "happinessLevel=" + happinessLevel +
+      ", learningLevel=" + learningLevel +
+      '}';
+  }
 }
