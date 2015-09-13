@@ -1,4 +1,4 @@
-angular.module('aggregatedFeedback', ['feedbackService', 'feedbackLevels'])
+angular.module('aggregatedFeedback', ['feedbackService', 'feedbackLevels', 'feedbackForm'])
   .factory('AggregatedFeedbackModel', function (FeedbackLevels) {
     function toModel(level) {
       return {
@@ -13,7 +13,7 @@ angular.module('aggregatedFeedback', ['feedbackService', 'feedbackLevels'])
     }
   })
 
-  .controller('AggregatedFeedbackController', function($scope, $interval, FeedbackService, AggregatedFeedbackModel) {
+  .controller('AggregatedFeedbackController', function($scope, $interval, FeedbackService, AggregatedFeedbackModel, FeedbackSubmissionModel) {
     function updateAggregatedFeedback() {
       function totalVotes(voteArray) {
         return voteArray.reduce(function (sum, value) {
@@ -37,6 +37,6 @@ angular.module('aggregatedFeedback', ['feedbackService', 'feedbackLevels'])
     }
 
     $scope.aggregatedFeedback = AggregatedFeedbackModel;
-
-    $interval(updateAggregatedFeedback, 3000)
+    $scope.feedbackSubmission = FeedbackSubmissionModel;
+    $interval(updateAggregatedFeedback, 1000)
   });

@@ -1,15 +1,15 @@
 angular.module('feedbackLevels', [])
   .constant('FeedbackLevels', {
     happinessLevels: [
-      { description: 'This sucks!' },
-      { description: 'Not great' },
-      { description: 'Meh' },
-      { description: 'Pretty good' },
-      { description: 'Awesome!' }
+      { index: 0, description: 'This sucks!' },
+      { index: 1, description: 'Not great' },
+      { index: 2, description: 'Meh' },
+      { index: 3, description: 'Pretty good' },
+      { index: 4, description: 'Awesome!' }
     ],
     learningLevels: [
-      { description: 'I\'ve learnt nothing!' },
-      { description: 'I\'ve learnt something' },
-      { description: 'Mind blown!' }
+      { index: 0, description: 'I\'ve learnt nothing!' },
+      { index: 1, description: 'I\'ve learnt something' },
+      { index: 2, description: 'Mind blown!' }
     ]
   });

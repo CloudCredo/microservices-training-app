@@ -1,14 +1,20 @@
-angular.module('feedbackForm', ['feedbackService', 'aggregatedFeedback'])
-  .controller('FeedbackFormController', function($scope, FeedbackService) {
+angular.module('feedbackForm', ['feedbackService', 'aggregatedFeedback', 'feedbackLevels'])
+  .constant('FeedbackSubmissionModel', {
+    submitted: false
+  })
+
+  .controller('FeedbackFormController', function($scope, FeedbackService, FeedbackLevels, FeedbackSubmissionModel) {
     function submitFeedback() {
       FeedbackService.submitFeedback($scope.feedback);
-      $scope.feedbackSubmitted = true;
+      FeedbackSubmissionModel.submitted = true;
+      console.log("Submitted: " + FeedbackSubmissionModel.submitted)
     }
 
     $scope.feedback = {
-      happinessLevel: 0,
-      learningLevel: 0
+      happinessLevel: 2,
+      learningLevel: 1
     };
-    $scope.feedbackSubmitted = false;
+    $scope.feedbackLevels = FeedbackLevels;
+    $scope.feedbackSubmission = FeedbackSubmissionModel;
     $scope.submitFeedback = submitFeedback;
   });
