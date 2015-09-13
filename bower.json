@@ -1,0 +1,18 @@
+{
+  "name": "microservices-training-app",
+  "version": "0.0.1",
+  "homepage": "https://github.com/CloudCredo/microservices-training-app",
+  "authors": [
+    "Gareth Clay <gareth.clay@gmail.com>"
+  ],
+  "description": "Microservices on Cloud Foundry training app",
+  "ignore": [
+    "**/.*",
+    "src/main/resources/static/bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-resource": "~1.4.5",
+    "bootstrap-css-only": "~3.3.5"
+  }
+}
