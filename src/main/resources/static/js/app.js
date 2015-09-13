@@ -1,5 +1,9 @@
 angular.module('feedback', [
   'aggregatedFeedback',
   'feedbackForm',
-  'feedbackService'
+  'feedbackLevels',
+  'feedbackService',
+
+  // Third party libs
+  'frapontillo.gage'
 ]);

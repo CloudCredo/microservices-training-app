@@ -60,13 +60,21 @@
         </div>
 
         <div id="aggregated-feedback" class="container" ng-controller="AggregatedFeedbackController">
-          <div class="container">
+          <div class="row">
             <h3>Overall happiness</h3>
-            <p ng-repeat="level in aggregatedFeedback.happinessLevels">{{level.description}}: {{level.votes}}</p>
+            <div class="col-xs-2" ng-repeat="level in aggregatedFeedback.happinessLevels">
+              <justgage title="{{level.description}}"
+                        value="{{level.votePercentage}}"
+                        symbol="%"></justgage>
+            </div>
           </div>
-          <div class="container">
+          <div class="row">
             <h3>Overall learning</h3>
-            <p ng-repeat="level in aggregatedFeedback.learningLevels">{{level.description}}: {{level.votes}}</p>
+            <div class="col-xs-2" ng-repeat="level in aggregatedFeedback.learningLevels">
+              <justgage title="{{level.description}}"
+                        value="{{level.votePercentage}}"
+                        symbol="%"></justgage>
+            </div>
           </div>
         </div>
       </div>
@@ -74,6 +82,10 @@
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-gage/dist/angular-gage.js"></script>
+    <script src="bower_components/justgage-bower/justgage.js"></script>
+    <script src="bower_components/raphael/raphael.js"></script>
+    <script src="js/feedback-levels.js"></script>
     <script src="js/aggregated-feedback.js"></script>
     <script src="js/feedback-form.js"></script>
     <script src="js/feedback-service.js"></script>
