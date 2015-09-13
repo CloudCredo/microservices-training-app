@@ -4,6 +4,13 @@ class FeedbackPostRequest {
   private int happinessLevel;
   private int learningLevel;
 
+  public FeedbackPostRequest() {}
+
+  public FeedbackPostRequest(int happinessLevel, int learningLevel) {
+    this.happinessLevel = happinessLevel;
+    this.learningLevel = learningLevel;
+  }
+
   public int getHappinessLevel() {
     return happinessLevel;
   }

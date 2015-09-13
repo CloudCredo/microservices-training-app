@@ -3,6 +3,10 @@ package com.cloudcredo.microservices.training.app.rest;
 class FeedbackPostResponse {
   private final String status;
 
+  public FeedbackPostResponse() {
+    this.status = "undefined";
+  }
+
   private FeedbackPostResponse(String status) {
     this.status = status;
   }
