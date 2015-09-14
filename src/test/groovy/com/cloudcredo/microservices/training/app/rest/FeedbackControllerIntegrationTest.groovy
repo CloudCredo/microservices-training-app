@@ -10,7 +10,7 @@ import spock.lang.Specification
 
 @SpringApplicationConfiguration(classes = FeedbackApplication.class)
 @WebIntegrationTest(randomPort = true)
-class FeedbackControllerTest extends Specification {
+class FeedbackControllerIntegrationTest extends Specification {
 
   @Value('${local.server.port}') int port;
   def restTemplate = new TestRestTemplate()
