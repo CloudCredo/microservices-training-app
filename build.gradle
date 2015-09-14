@@ -29,7 +29,16 @@ repositories {
 }
 
 dependencies {
+
+  //Spring Framework
   compile("org.springframework.boot:spring-boot-starter-web")
+  compile('org.springframework.data:spring-data-redis:1.6.0.RELEASE')
+
+  // ConnectionPool
+  compile("org.apache.commons:commons-pool2:2.2")
+
+  // Redis Drivers
+  compile("redis.clients:jedis:2.6.0")
 
   testCompile("org.springframework.boot:spring-boot-starter-test")
   testCompile('org.spockframework:spock-spring:1.0-groovy-2.4')
