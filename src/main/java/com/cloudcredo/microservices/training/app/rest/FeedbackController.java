@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/feedback")
 public class FeedbackController {
 
+  private FeedbackService feedbackService;
+
   @Autowired
-  FeedbackService feedbackService;
+  public FeedbackController(FeedbackService feedbackService) {
+    this.feedbackService = feedbackService;
+  }
 
   @RequestMapping(method = RequestMethod.GET)
   public FeedbackGetResponse getFeedback() {
     AggregatedFeedback feedback = feedbackService.getAggregatedFeedback();
-    FeedbackGetResponse response = FeedbackGetResponse.from(feedback);
-    return response;
+    return FeedbackGetResponse.from(feedback);
   }
 
   @RequestMapping(method = RequestMethod.POST)

@@ -27,4 +27,23 @@ public class Feedback {
       ", learningLevel=" + learningLevel +
       '}';
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Feedback feedback = (Feedback) o;
+
+    if (happinessLevel != feedback.happinessLevel) return false;
+    return learningLevel == feedback.learningLevel;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = happinessLevel != null ? happinessLevel.hashCode() : 0;
+    result = 31 * result + (learningLevel != null ? learningLevel.hashCode() : 0);
+    return result;
+  }
 }
