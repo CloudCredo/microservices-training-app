@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 class FeedbackServiceImpl implements FeedbackService {
-  @Autowired private FeedbackPersistenceService feedbackPersistenceService;
-  private Logger logger = LoggerFactory.getLogger(getClass());
+  private final Logger logger = LoggerFactory.getLogger(getClass());
+  private final FeedbackPersistenceService feedbackPersistenceService;
+
+  @Autowired
+  public FeedbackServiceImpl(FeedbackPersistenceService feedbackPersistenceService) {
+    this.feedbackPersistenceService = feedbackPersistenceService;
+  }
 
   @Override
   public AggregatedFeedback getAggregatedFeedback() {
