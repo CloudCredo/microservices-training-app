@@ -4,21 +4,27 @@ import com.cloudcredo.microservices.training.app.persistence.FeedbackPersistence
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 class FeedbackServiceImpl implements FeedbackService {
-  @Autowired private FeedbackPersistenceService feedbackPersistenceService;
-  private Logger logger = LoggerFactory.getLogger(getClass());
 
-  @Override
-  public AggregatedFeedback getAggregatedFeedback() {
-    return feedbackPersistenceService.getAggregatedFeedback();
-  }
+    private static final Logger logger = LoggerFactory.getLogger("FeedbackServiceImpl");
 
-  @Override
-  public void storeFeedback(Feedback feedback) {
-    logger.info("Storing new feedback: {}", feedback);
-    feedbackPersistenceService.saveFeedback(feedback);
-  }
+    @Autowired
+    @Qualifier("InMemoryFeedbackPersistenceService")
+    private FeedbackPersistenceService feedbackPersistenceService;
+
+
+    @Override
+    public AggregatedFeedback getAggregatedFeedback() {
+        return feedbackPersistenceService.getAggregatedFeedback();
+    }
+
+    @Override
+    public void storeFeedback(Feedback feedback) {
+        logger.info("Storing new feedback: {}", feedback);
+        feedbackPersistenceService.saveFeedback(feedback);
+    }
 }
