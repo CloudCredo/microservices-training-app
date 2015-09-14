@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.stream.Collectors;
 
-@Service
+@Service("InMemoryFeedbackPersistenceService")
 class InMemoryFeedbackPersistenceService implements FeedbackPersistenceService {
   private final ConcurrentMap<HappinessLevel, LongAdder> happinessLevels = new ConcurrentHashMap<>();
   private final ConcurrentMap<LearningLevel, LongAdder> learningLevels = new ConcurrentHashMap<>();
