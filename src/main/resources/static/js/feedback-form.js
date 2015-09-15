@@ -7,7 +7,6 @@ angular.module('feedbackForm', ['feedbackService', 'aggregatedFeedback', 'feedba
     function submitFeedback() {
       FeedbackService.submitFeedback($scope.feedback);
       FeedbackSubmissionModel.submitted = true;
-      console.log("Submitted: " + FeedbackSubmissionModel.submitted)
     }
 
     $scope.feedback = {
