@@ -11,9 +11,9 @@ angular.module('feedbackLevels', [])
     return {
       happinessLevels: [
         {index: 0, description: "This sucks!", gaugeColours: [darkRed, lightRed]},
-        {index: 1, description: "Not great", gaugeColours: [darkRed, darkOrange]},
+        {index: 1, description: "Not great", gaugeColours: [darkRed, lightRed]},
         {index: 2, description: "Meh", gaugeColours: [darkOrange, lightOrange]},
-        {index: 3, description: "Pretty good", gaugeColours: [darkOrange, darkGreen]},
+        {index: 3, description: "Pretty good", gaugeColours: [darkGreen, lightGreen]},
         {index: 4, description: "Awesome!", gaugeColours: [darkGreen, lightGreen]}
       ],
       learningLevels: [
