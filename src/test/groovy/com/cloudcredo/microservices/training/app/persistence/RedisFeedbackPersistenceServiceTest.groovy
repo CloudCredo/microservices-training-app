@@ -16,13 +16,14 @@ class RedisFeedbackPersistenceServiceTest extends Specification {
     private RedisFeedbackPersistenceService unit;
 
     @Autowired
-    private RedisTemplate<Integer, Integer> redisTemplate
+    private RedisTemplate<String, Integer> redisTemplate
 
     def setup() {
-        redisTemplate.delete(HappinessLevel.HAPPY)
+        redisTemplate.delete(HappinessLevel.HAPPY.name())
+        redisTemplate.delete(LearningLevel.LEARNT_A_LOT.name())
     }
 
-    def "#persists feedback into redis"() {
+    def "#persists happiness level feedback into redis"() {
         given:
         final feedback = new Feedback(HappinessLevel.HAPPY, LearningLevel.LEARNT_A_LOT);
 
@@ -30,6 +31,29 @@ class RedisFeedbackPersistenceServiceTest extends Specification {
         unit.saveFeedback(feedback)
 
         then:
-        assert redisTemplate.hasKey(HappinessLevel.HAPPY.ordinal()) == true
+        assert redisTemplate.hasKey(HappinessLevel.HAPPY.name()) == true
+    }
+
+    def "#increments happiness level"() {
+        given:
+        final feedback = new Feedback(HappinessLevel.HAPPY, LearningLevel.LEARNT_A_LOT);
+
+        when:
+        2.times { unit.saveFeedback(feedback) }
+
+        then:
+        println redisTemplate.opsForValue().get(HappinessLevel.HAPPY.name())
+        assert redisTemplate.opsForValue().get(HappinessLevel.HAPPY.name()) == 2
+    }
+
+    def "#persists learning level feedback into Redis"() {
+        given:
+        final feedback = new Feedback(HappinessLevel.HAPPY, LearningLevel.LEARNT_A_LOT);
+
+        when:
+        unit.saveFeedback(feedback)
+
+        then:
+        assert redisTemplate.hasKey(LearningLevel.LEARNT_A_LOT.name()) == true
     }
 }

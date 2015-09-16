@@ -4,6 +4,7 @@ import com.cloudcredo.microservices.training.app.core.AggregatedFeedback;
 import com.cloudcredo.microservices.training.app.core.Feedback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class RedisFeedbackPersistenceService implements FeedbackPersistenceService {
 
     @Autowired
-    private RedisTemplate<Integer, Integer> redisTemplate;
+    private RedisTemplate<String, Integer> redisTemplate;
 
     @Override
     public AggregatedFeedback getAggregatedFeedback() {
@@ -22,8 +23,21 @@ public class RedisFeedbackPersistenceService implements FeedbackPersistenceServi
 
     @Override
     public void saveFeedback(Feedback feedback) {
-        int learningLevel = feedback.getLearningLevel().ordinal();
-        int happinessLevel = feedback.getHappinessLevel().ordinal();
-        redisTemplate.opsForValue().set(happinessLevel, learningLevel);
+        incrementHappinessLevel(feedback);
+        incrementLearningLevel(feedback);
+    }
+
+    private void incrementHappinessLevel(Feedback feedback) {
+        String learningLevel = feedback.getHappinessLevel().name();
+        ValueOperations<String, Integer> operations = redisTemplate.opsForValue();
+        operations.setIfAbsent(learningLevel, 0);
+        operations.increment(learningLevel, 1);
+    }
+
+    private void incrementLearningLevel(Feedback feedback) {
+        String learningLevel = feedback.getLearningLevel().name();
+        ValueOperations<String, Integer> operations = redisTemplate.opsForValue();
+        operations.setIfAbsent(learningLevel, 0);
+        operations.increment(learningLevel, 1);
     }
 }
