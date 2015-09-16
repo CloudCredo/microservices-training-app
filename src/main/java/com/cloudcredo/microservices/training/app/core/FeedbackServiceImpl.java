@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 class FeedbackServiceImpl implements FeedbackService {
-  private final Logger logger = LoggerFactory.getLogger(getClass());
+  private static final Logger logger = LoggerFactory.getLogger(FeedbackServiceImpl.class);
+
   private final FeedbackPersistenceService feedbackPersistenceService;
 
   @Autowired
