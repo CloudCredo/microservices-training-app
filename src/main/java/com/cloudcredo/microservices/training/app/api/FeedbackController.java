@@ -1,4 +1,4 @@
-package com.cloudcredo.microservices.training.app.rest;
+package com.cloudcredo.microservices.training.app.api;
 
 import com.cloudcredo.microservices.training.app.core.*;
 import org.springframework.beans.factory.annotation.Autowired;

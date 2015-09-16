@@ -1,4 +1,4 @@
-package com.cloudcredo.microservices.training.app.rest
+package com.cloudcredo.microservices.training.app.api
 
 import com.cloudcredo.microservices.training.app.FeedbackApplication
 import org.springframework.beans.factory.annotation.Value

@@ -1,4 +1,4 @@
-package com.cloudcredo.microservices.training.app.rest;
+package com.cloudcredo.microservices.training.app.api;
 
 class FeedbackPostRequest {
   private int happinessLevel;
