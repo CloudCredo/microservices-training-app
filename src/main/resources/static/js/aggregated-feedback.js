@@ -1,10 +1,7 @@
 angular.module('aggregatedFeedback', ['feedbackService', 'feedbackLevels', 'feedbackForm'])
   .factory('AggregatedFeedbackModel', function (FeedbackLevels) {
     function toModel(level) {
-      return {
-        description: level.description,
-        votePercentage: 0
-      }
+      return angular.extend({ votePercentage: 0 }, level);
     }
 
     return {

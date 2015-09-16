@@ -1,4 +1,4 @@
-package com.cloudcredo.microservices.training.app.rest
+package com.cloudcredo.microservices.training.app.api
 
 import com.cloudcredo.microservices.training.app.FeedbackApplication
 import org.springframework.beans.factory.annotation.Value
@@ -10,7 +10,7 @@ import spock.lang.Specification
 
 @SpringApplicationConfiguration(classes = FeedbackApplication.class)
 @WebIntegrationTest(randomPort = true)
-class FeedbackControllerTest extends Specification {
+class FeedbackControllerIntegrationTest extends Specification {
 
   @Value('${local.server.port}') int port;
   def restTemplate = new TestRestTemplate()

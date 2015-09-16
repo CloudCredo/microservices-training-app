@@ -9,22 +9,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 class FeedbackServiceImpl implements FeedbackService {
+  private static final Logger logger = LoggerFactory.getLogger(FeedbackServiceImpl.class);
 
-    private static final Logger logger = LoggerFactory.getLogger("FeedbackServiceImpl");
+  private final FeedbackPersistenceService feedbackPersistenceService;
 
-    @Autowired
-    @Qualifier("InMemoryFeedbackPersistenceService")
-    private FeedbackPersistenceService feedbackPersistenceService;
+  @Autowired
+  public FeedbackServiceImpl(@Qualifier("InMemoryFeedbackPersistenceService") FeedbackPersistenceService feedbackPersistenceService) {
+    this.feedbackPersistenceService = feedbackPersistenceService;
+  }
 
+  @Override
+  public AggregatedFeedback getAggregatedFeedback() {
+    return feedbackPersistenceService.getAggregatedFeedback();
+  }
 
-    @Override
-    public AggregatedFeedback getAggregatedFeedback() {
-        return feedbackPersistenceService.getAggregatedFeedback();
-    }
-
-    @Override
-    public void storeFeedback(Feedback feedback) {
-        logger.info("Storing new feedback: {}", feedback);
-        feedbackPersistenceService.saveFeedback(feedback);
-    }
+  @Override
+  public void storeFeedback(Feedback feedback) {
+    logger.info("Storing new feedback: {}", feedback);
+    feedbackPersistenceService.saveFeedback(feedback);
+  }
 }
