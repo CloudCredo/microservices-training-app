@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * Created by cloudcredo on 14/09/2015.
  */
 @Service("RedisFeedbackPersistenceService")
-public class RedisFeedbackPersistenceService implements FeedbackPersistenceService {
+class RedisFeedbackPersistenceService implements FeedbackPersistenceService {
 
     @Autowired
     private RedisTemplate<String, Integer> redisTemplate;
