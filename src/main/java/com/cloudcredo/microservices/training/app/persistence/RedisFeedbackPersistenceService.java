@@ -28,10 +28,10 @@ class RedisFeedbackPersistenceService implements FeedbackPersistenceService {
     }
 
     private void incrementHappinessLevel(Feedback feedback) {
-        String learningLevel = feedback.getHappinessLevel().name();
+        String happinessLevel = feedback.getHappinessLevel().name();
         ValueOperations<String, Integer> operations = redisTemplate.opsForValue();
-        operations.setIfAbsent(learningLevel, 0);
-        operations.increment(learningLevel, 1);
+        operations.setIfAbsent(happinessLevel, 0);
+        operations.increment(happinessLevel, 1);
     }
 
     private void incrementLearningLevel(Feedback feedback) {
