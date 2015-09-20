@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * Created by cloudcredo on 14/09/2015.
  */
 @Service("RedisFeedbackPersistenceService")
-public class RedisFeedbackPersistenceService implements FeedbackPersistenceService {
+class RedisFeedbackPersistenceService implements FeedbackPersistenceService {
 
     @Autowired
     private RedisTemplate<String, Integer> redisTemplate;
@@ -28,10 +28,10 @@ public class RedisFeedbackPersistenceService implements FeedbackPersistenceServi
     }
 
     private void incrementHappinessLevel(Feedback feedback) {
-        String learningLevel = feedback.getHappinessLevel().name();
+        String happinessLevel = feedback.getHappinessLevel().name();
         ValueOperations<String, Integer> operations = redisTemplate.opsForValue();
-        operations.setIfAbsent(learningLevel, 0);
-        operations.increment(learningLevel, 1);
+        operations.setIfAbsent(happinessLevel, 0);
+        operations.increment(happinessLevel, 1);
     }
 
     private void incrementLearningLevel(Feedback feedback) {
