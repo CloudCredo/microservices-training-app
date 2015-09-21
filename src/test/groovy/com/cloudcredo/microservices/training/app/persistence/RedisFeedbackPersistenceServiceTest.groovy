@@ -7,16 +7,28 @@ import com.cloudcredo.microservices.training.app.core.LearningLevel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.data.redis.core.RedisTemplate
+import redis.embedded.RedisServer
 import spock.lang.Specification
 
 @SpringApplicationConfiguration(classes = FeedbackApplication.class)
 class RedisFeedbackPersistenceServiceTest extends Specification {
 
     @Autowired
-    private RedisFeedbackPersistenceService unit;
+    private RedisFeedbackPersistenceService unit
 
     @Autowired
     private RedisTemplate<String, Integer> redisTemplate
+
+    private static RedisServer redisServer
+
+    void setupSpec() {
+        redisServer = new RedisServer(6379);
+        redisServer.start()
+    }
+
+    void cleanupSpec() {
+        redisServer.stop()
+    }
 
     def setup() {
         redisTemplate.delete(HappinessLevel.HAPPY.name())
