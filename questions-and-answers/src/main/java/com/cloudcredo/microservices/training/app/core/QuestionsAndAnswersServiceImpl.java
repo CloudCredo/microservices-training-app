@@ -34,4 +34,9 @@ class QuestionsAndAnswersServiceImpl implements QuestionsAndAnswersService {
   public List<Question> getAllQuestions() {
     return persistenceService.getAllQuestions();
   }
+
+  @Override
+  public List<Answer> getAnswersForQuestion(long questionId) {
+    return persistenceService.getAnswersToQuestion(questionId);
+  }
 }

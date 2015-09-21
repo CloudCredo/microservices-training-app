@@ -38,5 +38,9 @@ public class QuestionsAndAnswersController {
     questionsAndAnswersService.answerQuestion(answer);
   }
 
-
+  @RequestMapping(value = "{questionId}/answers", method = RequestMethod.GET)
+  public AnswersGetResponse answersForQuestion(@PathVariable long questionId) {
+    List<Answer> answers = questionsAndAnswersService.getAnswersForQuestion(questionId);
+    return AnswersGetResponse.from(answers);
+  }
 }

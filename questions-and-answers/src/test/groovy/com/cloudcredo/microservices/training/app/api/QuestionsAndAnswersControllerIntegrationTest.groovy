@@ -1,10 +1,14 @@
 package com.cloudcredo.microservices.training.app.api
 import com.cloudcredo.microservices.training.app.QuestionsAndAnswersApplication
+import com.cloudcredo.microservices.training.app.core.Answer
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.boot.test.TestRestTemplate
 import org.springframework.boot.test.WebIntegrationTest
+import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.http.HttpStatus
+import redis.embedded.RedisServer
 import spock.lang.Specification
 
 @SpringApplicationConfiguration(classes = QuestionsAndAnswersApplication)
@@ -12,7 +16,23 @@ import spock.lang.Specification
 class QuestionsAndAnswersControllerIntegrationTest extends Specification {
 
   @Value('${local.server.port}') int port
+  @Autowired def RedisConnectionFactory redisConnectionFactory
   def restTemplate = new TestRestTemplate()
+
+  static RedisServer redisServer
+
+  def setupSpec() {
+    redisServer = new RedisServer(6379);
+    redisServer.start()
+  }
+
+  def cleanupSpec() {
+    redisServer.stop()
+  }
+
+  def setup() {
+    redisConnectionFactory.connection.flushAll()
+  }
 
   def baseUrl() {
     "http://localhost:${port}"
@@ -37,21 +57,6 @@ class QuestionsAndAnswersControllerIntegrationTest extends Specification {
     response.statusCode == HttpStatus.OK
   }
 
-  def 'returns known questions'() {
-    given:
-    def questionsToAsk = [new QuestionPostRequest(question: 'foo'), new QuestionPostRequest(question: 'bar')]
-    questionsToAsk.each { request ->
-      restTemplate.postForEntity(questionsUrl(), request, QuestionPostResponse)
-    }
-
-    when:
-    def response = restTemplate.getForEntity(questionsUrl(), QuestionsGetResponse)
-
-    then:
-    response.statusCode == HttpStatus.OK
-    response.body.questions.collect { it -> it.question } containsAll('foo', 'bar')
-  }
-
   def 'accepts new answers'() {
     given:
     def request = new AnswerPostRequest(answer: 'answer')
@@ -63,20 +68,56 @@ class QuestionsAndAnswersControllerIntegrationTest extends Specification {
     response.statusCode == HttpStatus.OK
   }
 
-  // TODO answers GET response
-//  def 'returns known answers'() {
-//    given:
-//    def questionId = 1
-//    def answersToStore = [
-//        new AnswerPostRequest('Answer A'),
-//        new AnswerPostRequest('Answer B')
-//    ]
-//    answersToStore.each { answer ->
-//      restTemplate.postForEntity(answersUrl(questionId), answer, AnswerPostResponse)
-//    }
-//
-//    when:
-//    restTemplate.getForEntity(answersUrl(questionId), Answer)
-//  }
+  def 'returns known questions'() {
+    given:
+    def questionsToAsk = [new QuestionPostRequest(question: 'q1'), new QuestionPostRequest(question: 'q2')]
+    questionsToAsk.each { request ->
+      restTemplate.postForEntity(questionsUrl(), request, QuestionPostResponse)
+    }
 
+    when:
+    def response = restTemplate.getForEntity(questionsUrl(), QuestionsGetResponse)
+
+    then:
+    response.statusCode == HttpStatus.OK
+    response.body.questions.collect { it -> it.question } containsAll('q1', 'q2')
+  }
+
+  def 'returns known answers to a question'() {
+    given:
+    def questionsToAsk = [new QuestionPostRequest(question: 'q3'), new QuestionPostRequest(question: 'q4')]
+    questionsToAsk.each { request ->
+      restTemplate.postForEntity(questionsUrl(), request, QuestionPostResponse)
+    }
+    def questionsResponse = restTemplate.getForEntity(questionsUrl(), QuestionsGetResponse)
+    def questionIds = questionsResponse.body.questions.collect { q -> q.id }
+    for (def questionId : questionIds) {
+      for (def i = 1; i <=2; i++) {
+        def answerRequest = new AnswerPostRequest(questionId: questionId, answer: "Question ${questionId} answer ${i}")
+        restTemplate.postForEntity(answersUrl(questionId), answerRequest, AnswerPostResponse)
+      }
+    }
+
+    when:
+    def answers = new HashMap<Long, List<Answer>>()
+    def answersResponses = []
+    questionIds.each { questionId ->
+      def answersResponse = restTemplate.getForEntity(answersUrl(questionId), AnswersGetResponse)
+      answersResponse.body.answers.each { answer ->
+        answers.putIfAbsent(questionId, [])
+        answers.get(questionId).add(answer)
+      }
+      answersResponses.add(answersResponse)
+    }
+
+    then:
+    answersResponses.each { response -> response.statusCode == HttpStatus.OK }
+    questionIds.each { questionId ->
+      answers[questionId].size() == 2
+      def answerStrings = answers[questionId].collect { a -> a.answer }
+      for (def i = 1; i < 3; i++) {
+        answerStrings.contains("Question ${questionId} answer ${i}")
+      }
+    }
+  }
 }

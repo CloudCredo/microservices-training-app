@@ -59,8 +59,8 @@ class RedisQuestionAndAnswersPersistenceService implements QuestionAndAnswersPer
   }
 
   @Override
-  public List<Answer> getAnswersToQuestion(Question question) {
-    return answerRedisTemplate.opsForList().range(answerKey(question.getId()), 0, -1);
+  public List<Answer> getAnswersToQuestion(long questionId) {
+    return answerRedisTemplate.opsForList().range(answerKey(questionId), 0, -1);
   }
 
   private static String questionKey(Question question) {

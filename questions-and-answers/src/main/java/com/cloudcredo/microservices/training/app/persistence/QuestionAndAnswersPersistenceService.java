@@ -9,5 +9,5 @@ public interface QuestionAndAnswersPersistenceService {
   Question saveQuestion(Question question);
   List<Question> getAllQuestions();
   void saveAnswer(Answer answer);
-  List<Answer> getAnswersToQuestion(Question question);
+  List<Answer> getAnswersToQuestion(long questionId);
 }

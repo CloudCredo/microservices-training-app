@@ -6,4 +6,5 @@ public interface QuestionsAndAnswersService {
   void askQuestion(Question question);
   void answerQuestion(Answer answer);
   List<Question> getAllQuestions();
+  List<Answer> getAnswersForQuestion(long questionId);
 }
