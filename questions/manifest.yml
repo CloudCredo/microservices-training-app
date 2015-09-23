@@ -1,0 +1,5 @@
+applications:
+- name: questions
+  memory: 512M
+  path: ./build/libs/questions-0.3.0-SNAPSHOT.jar
+  random-route: true
