@@ -3,6 +3,9 @@ angular.module('feedback', [
   'feedbackForm',
   'feedbackLevels',
   'feedbackService',
+  'questionForm',
+  'questionsAndAnswers',
+  'questionsAndAnswersService',
 
   // Third party libs
   'frapontillo.gage'

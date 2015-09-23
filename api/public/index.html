@@ -99,6 +99,25 @@
         </div>
       </div>
     </div>
+
+    <div id="question-form" class="container" ng-controller="QuestionFormController">
+      <h3>Got a question? Ask us!</h3>
+      <form>
+        <label>
+          <input ng-model="question">
+        </label>
+        <button class="btn btn-primary" ng-click="submitQuestion()">Submit</button>
+      </form>
+    </div>
+
+    <div id="questions-and-answers" class="container" ng-controller="QuestionsAndAnswersController">
+      <div class="row" ng-repeat="question in questions">
+        <p>{{question.question}}</p>
+        <div class="row" ng-repeat="answer in question.answers">
+          <p>{{answer.answer}}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -111,6 +130,9 @@
 <script src="js/aggregated-feedback.js"></script>
 <script src="js/feedback-form.js"></script>
 <script src="js/feedback-service.js"></script>
+<script src="js/question-form.js"></script>
+<script src="js/questions-and-answers.js"></script>
+<script src="js/questions-and-answers-service.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
