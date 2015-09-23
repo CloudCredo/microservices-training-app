@@ -1,0 +1,8 @@
+applications:
+- name: api
+  memory: 64M
+  random-route: true
+
+services:
+- feedback
+- questions
