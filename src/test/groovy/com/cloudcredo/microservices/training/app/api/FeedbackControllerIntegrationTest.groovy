@@ -1,19 +1,41 @@
 package com.cloudcredo.microservices.training.app.api
 
 import com.cloudcredo.microservices.training.app.FeedbackApplication
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.boot.test.TestRestTemplate
 import org.springframework.boot.test.WebIntegrationTest
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.http.HttpStatus
+import redis.embedded.RedisServer
 import spock.lang.Specification
 
 @SpringApplicationConfiguration(classes = FeedbackApplication.class)
 @WebIntegrationTest(randomPort = true)
 class FeedbackControllerIntegrationTest extends Specification {
 
+  private static RedisServer redisServer
+
   @Value('${local.server.port}') int port;
   def restTemplate = new TestRestTemplate()
+
+  @Autowired
+  private RedisTemplate<String, Integer> redisTemplate
+
+
+  void setupSpec() {
+    redisServer = new RedisServer(6379);
+    redisServer.start()
+  }
+
+  void cleanupSpec() {
+    redisServer.stop()
+  }
+
+  def setup() {
+    redisTemplate.connectionFactory.connection.flushAll()
+  }
 
   def feedbackUrl() {
     "http://localhost:${port}/feedback"
