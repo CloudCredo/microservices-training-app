@@ -2,14 +2,18 @@ package com.cloudcredo.microservices.training.app.persistence;
 
 import com.cloudcredo.microservices.training.app.core.AggregatedFeedback;
 import com.cloudcredo.microservices.training.app.core.Feedback;
+import com.cloudcredo.microservices.training.app.core.HappinessLevel;
+import com.cloudcredo.microservices.training.app.core.LearningLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by cloudcredo on 14/09/2015.
- */
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 @Service("RedisFeedbackPersistenceService")
 class RedisFeedbackPersistenceService implements FeedbackPersistenceService {
 
@@ -18,7 +22,19 @@ class RedisFeedbackPersistenceService implements FeedbackPersistenceService {
 
     @Override
     public AggregatedFeedback getAggregatedFeedback() {
-        throw new IllegalArgumentException("Not yet implemented");
+      ValueOperations<String, Integer> operations = redisTemplate.opsForValue();
+
+      Function<Enum<?>, Integer> levelToCount = level -> {
+        Integer count = operations.get(level.name());
+        return count != null ? count : 0;
+      };
+
+      Map<HappinessLevel, Integer> aggregatedHappiness = Arrays.stream(HappinessLevel.values())
+          .collect(Collectors.toMap(Function.identity(), levelToCount));
+      Map<LearningLevel, Integer> aggregatedLearning = Arrays.stream(LearningLevel.values())
+          .collect(Collectors.toMap(Function.identity(), levelToCount));
+
+      return new AggregatedFeedback(aggregatedHappiness, aggregatedLearning);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.cloudcredo.microservices.training.app.context;
 
-import org.springframework.boot.autoconfigure.cloud.CloudAutoConfiguration;
 import org.springframework.cloud.Cloud;
 import org.springframework.cloud.CloudFactory;
 import org.springframework.cloud.service.common.RedisServiceInfo;
@@ -13,7 +12,6 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisShardInfo;
 
-import java.awt.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -46,7 +44,7 @@ public class RedisContext {
         RedisTemplate<String, Integer> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redJedisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericToStringSerializer<>(Long.class));
+        redisTemplate.setValueSerializer(new GenericToStringSerializer<>(Integer.class));
         return redisTemplate;
     }
 }
