@@ -14,7 +14,7 @@ class FeedbackServiceImpl implements FeedbackService {
   private final FeedbackPersistenceService feedbackPersistenceService;
 
   @Autowired
-  public FeedbackServiceImpl(@Qualifier("InMemoryFeedbackPersistenceService") FeedbackPersistenceService feedbackPersistenceService) {
+  public FeedbackServiceImpl(@Qualifier("RedisFeedbackPersistenceService") FeedbackPersistenceService feedbackPersistenceService) {
     this.feedbackPersistenceService = feedbackPersistenceService;
   }
 

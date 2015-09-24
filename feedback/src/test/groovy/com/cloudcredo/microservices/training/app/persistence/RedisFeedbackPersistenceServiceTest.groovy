@@ -31,8 +31,7 @@ class RedisFeedbackPersistenceServiceTest extends Specification {
     }
 
     def setup() {
-        redisTemplate.delete(HappinessLevel.HAPPY.name())
-        redisTemplate.delete(LearningLevel.LEARNT_A_LOT.name())
+        redisTemplate.connectionFactory.connection.flushAll()
     }
 
     def "#persists happiness level feedback into redis"() {
