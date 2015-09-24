@@ -1,0 +1,22 @@
+redis:
+  image: redis
+  ports:
+  - "6379:6379"
+
+api:
+  build: api
+  ports:
+  - "80:80"
+  links:
+  - feedback
+  - questions
+
+feedback:
+  build: feedback
+  links:
+  - redis
+
+questions:
+  build: questions
+  links:
+  - redis
