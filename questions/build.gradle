@@ -43,6 +43,10 @@ task wrapper(type: Wrapper) {
   gradleVersion = '2.3'
 }
 
+test {
+  systemProperty 'spring.profiles.active', 'development'
+}
+
 run {
   systemProperty 'spring.profiles.active', 'development'
 }
