@@ -27,7 +27,7 @@ angular.module('feedback', ['ngResource'])
   .controller('FeedbackFormController', function($scope, $location, FeedbackService, FeedbackLevels) {
     function submitFeedback() {
       FeedbackService.submitFeedback($scope.feedback);
-      $location.path('/aggregated-feedback')
+      $location.path('/feedback-submitted')
     }
 
     $scope.feedback = {
@@ -47,6 +47,15 @@ angular.module('feedback', ['ngResource'])
       happinessLevels: FeedbackLevels.happinessLevels.map(toModel),
       learningLevels: FeedbackLevels.learningLevels.map(toModel),
       totalVotes: 0
+    }
+  })
+
+  .directive('cnAggregatedFeedback', function() {
+    return {
+      scope: {},
+      restrict: 'E',
+      controller: 'AggregatedFeedbackController',
+      templateUrl: 'templates/aggregated-feedback.html'
     }
   })
 

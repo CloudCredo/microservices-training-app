@@ -1,0 +1,35 @@
+<div id="questions-and-answers" class="row" ng-if="questions.length">
+  <h3>You asked, we'll answer!</h3>
+  <div class="panel-group" id="question-accordion" role="tablist">
+    <div id="question-{{question.id}}-panel"
+         class="panel panel-default repeated-item"
+         ng-class="{'panel-warning': question.answers.length == 0}"
+         ng-repeat="question in questions | filter:defined | orderBy:id:true track by $index">
+      <div class="panel-heading" role="tab">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-parent="#question-accordion" class="collapsed" data-target="#question-{{question.id}}-collapse">
+            Question {{question.id}} ({{question.answers.length}} answers)
+          </a>
+        </h4>
+        <p>{{question.question}}</p>
+      </div>
+      <div id="question-{{question.id}}-collapse" class="panel-collapse collapse" role="tabpanel">
+        <ul class="list-group">
+          <li class="list-group-item repeated-item" ng-repeat="answer in question.answers">{{answer.answer}}</li>
+        </ul>
+        <div class="panel-body">
+          <form>
+            <div class="form-group">
+              <textarea id="question-{{question.id}}-answer-textarea"
+                        class="form-control"
+                        rows="2"
+                        placeholder="Hey, I know the answer to that..."
+                        ng-model="question.myAnswer"></textarea>
+            </div>
+            <button class="btn btn-primary" ng-class="{disabled: question.myAnswer.length == 0}" ng-click="submitAnswer(question)">Answer!</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

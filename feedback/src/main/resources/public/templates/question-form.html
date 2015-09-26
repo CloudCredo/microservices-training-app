@@ -1,0 +1,13 @@
+<div id="question-form" class="row">
+  <h3>Got a question? Ask us!</h3>
+  <form>
+    <div class="form-group">
+      <textarea id="question-form-textarea"
+                class="form-control"
+                rows="4"
+                placeholder="So... what are these microservice things again?"
+                ng-model="question"></textarea>
+    </div>
+    <button class="btn btn-primary" ng-class="{disabled: question.length == 0}" ng-click="submitQuestion()">Submit</button>
+  </form>
+</div>

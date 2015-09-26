@@ -15,7 +15,7 @@
     "angular-resource": "~1.4.5",
     "angular-route": "~1.4.5",
     "angular-gage": "~0.1.0",
-    "bootstrap-css-only": "~3.3.5"
+    "bootstrap": "~3.3.5"
   },
   "resolutions": {
     "angular": "~1.4.5"
