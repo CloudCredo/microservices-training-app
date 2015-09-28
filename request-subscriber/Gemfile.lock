@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    cf-app-utils (0.6)
     diff-lcs (1.2.5)
     redis (3.2.1)
     rspec (3.3.0)
@@ -21,6 +22,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  cf-app-utils
   redis
   rspec
 
