@@ -2,14 +2,14 @@ $LOAD_PATH << 'lib'
 
 require 'redis'
 
-require 'request_metadata_subscriber'
+require 'redis_subscriber'
 require 'stdout_handler'
 
 $stdout.sync = true
 trap(:INT) { exit }
 
 redis = Redis.new
-stdoutHandler = StdoutHandler.new
+stdout_handler = StdoutHandler.new
 
-subscriber = RequestMetadataSubscriber.new(redis)
-subscriber.subscribe(stdoutHandler)
+subscriber = RedisSubscriber.new(redis)
+subscriber.subscribe('requestMetadata', stdout_handler)

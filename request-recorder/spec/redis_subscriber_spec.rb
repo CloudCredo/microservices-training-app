@@ -1,8 +1,8 @@
 require 'redis'
 
-require 'request_metadata_subscriber'
+require 'redis_subscriber'
 
-RSpec.describe RequestMetadataSubscriber do
+RSpec.describe RedisSubscriber do
 
   let(:redis) { instance_double(Redis) }
   let(:on_subscribe) { double(:on_subscribe) }
@@ -20,7 +20,7 @@ RSpec.describe RequestMetadataSubscriber do
     expect(on_subscribe).to receive(:message)
     expect(handler).to receive(:handle_message).with('message')
 
-    subject.subscribe(handler)
+    subject.subscribe('requestMetadata', handler)
   end
 
 end
