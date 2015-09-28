@@ -6,4 +6,5 @@ applications:
   random-route: true
 
 services:
+- questions
 - cloudcredo-training-redis

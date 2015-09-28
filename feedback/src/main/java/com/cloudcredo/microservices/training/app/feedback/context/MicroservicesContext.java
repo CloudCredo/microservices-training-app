@@ -10,7 +10,7 @@ import java.net.URI;
 @Configuration
 public class MicroservicesContext {
   @Bean
-  public RestProxy questionsService(@Value("${microservices.questions.url}") URI url) {
-    return new RestProxy(url);
+  public RestProxy questionsService(@Value("${vcap.services.questions.credentials.url}") String url) {
+    return new RestProxy(URI.create("http://" + url));
   }
 }
