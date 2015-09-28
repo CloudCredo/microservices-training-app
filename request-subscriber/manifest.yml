@@ -1,8 +1,9 @@
 ---
 applications:
 - name: request-subscriber
-  memory: 512M
+  memory: 128M
   no-route: true
+  command: bundle exec ./console_worker
 
 services:
 - cloudcredo-training-redis
