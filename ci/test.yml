@@ -8,5 +8,6 @@ inputs:
   path: .
 
 run:
-  path: ./ci/gradlew.sh test
+  path: ./ci/gradlew.sh
+  args: [test]
 

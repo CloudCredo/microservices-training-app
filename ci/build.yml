@@ -8,4 +8,5 @@ inputs:
   path: .
 
 run:
-  path: ./ci/gradlew.sh bootRepackage
+  path: ./ci/gradlew.sh
+  args: [bootRepackage]
