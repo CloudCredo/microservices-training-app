@@ -2,4 +2,6 @@
 
 set -ex
 
+export TERM=vt100
+
 ./gradlew --debug "$@"
