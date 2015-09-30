@@ -1,6 +1,7 @@
 angular.module('app', [
   'feedback',
   'questions',
+  'myMicroservice',
 
   // Third party libs
   'ngRoute',
