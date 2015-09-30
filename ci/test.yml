@@ -4,7 +4,7 @@ platform: linux
 image: docker:///java#8-jdk
 
 inputs:
-- name: 1-monolith
+- name: 2-application-state
   path: .
 
 run:
