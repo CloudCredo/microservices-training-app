@@ -2,4 +2,4 @@
 
 set -ex
 
-./gradlew "$@"
+./gradlew --debug "$@"
