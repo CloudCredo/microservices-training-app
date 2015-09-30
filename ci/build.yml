@@ -4,7 +4,7 @@ platform: linux
 image: docker:///java#8-jdk
 
 inputs:
-- name: 2-application-state
+- name: 3-microservice
   path: .
 
 run:

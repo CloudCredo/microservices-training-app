@@ -1,9 +1,19 @@
 ---
 applications:
+- name: questions
+  memory: 512M
+  path: ./questions/build/libs/questions-0.3.0-SNAPSHOT.jar
+  random-route: true
+  services:
+  - questions-redis
+
 - name: feedback
   memory: 512M
-  path: ./build/libs/feedback-0.3.0-SNAPSHOT.jar
+  path: ./feedback/build/libs/feedback-0.3.0-SNAPSHOT.jar
   random-route: true
+  env:
+    MY_MICROSERVICE_URL: 'localhost' # Microservice bonus task!
+  services:
+  - questions
+  - feedback-redis
 
-services:
-- feedback-redis
