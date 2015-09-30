@@ -1,0 +1,13 @@
+---
+platform: linux
+
+image: docker:///java#8-jdk
+
+inputs:
+- name: 3-microservice
+  path: .
+
+run:
+  path: ./ci/gradlew.sh
+  args: [test]
+
