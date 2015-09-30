@@ -1,7 +1,7 @@
 ---
 platform: linux
 
-image: docker:///java:8-jre
+image: docker:///java#8-jre
 
 inputs:
 - name: 1-monolith
