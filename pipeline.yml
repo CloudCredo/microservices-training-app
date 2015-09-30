@@ -6,6 +6,79 @@ jobs:
       trigger: true
     - task: test
       file: 1-monolith/ci/test.yml
+      config:
+        params:
+          TERM: vt100
+
+  - name: application-state-test
+    plan:
+    - get: 2-application-state
+      trigger: true
+    - task: test
+      file: 2-application-state/ci/test.yml
+      config:
+        params:
+          TERM: vt100
+
+  - name: microservice-test
+    plan:
+    - get: 3-microservice
+      trigger: true
+    - task: test
+      file: 3-microservice/ci/test.yml
+      config:
+        params:
+          TERM: vt100
+
+  - name: tracing-test
+    plan:
+    - get: 4-tracing
+      trigger: true
+    - task: test
+      file: 4-tracing/ci/test.yml
+      config:
+        params:
+          TERM: vt100
+
+  - name: async-communication-test
+    plan:
+    - get: 5-async-communication
+      trigger: true
+    - task: test
+      file: 5-async-communication/ci/test.yml
+      config:
+        params:
+          TERM: vt100
+
+  - name: blue-green-test
+    plan:
+    - get: 6-blue-green
+      trigger: true
+    - task: test
+      file: 6-blue-green/ci/test.yml
+      config:
+        params:
+          TERM: vt100
+
+  - name: scaling-test
+    plan:
+    - get: 7-scaling
+      trigger: true
+    - task: test
+      file: 7-scaling/ci/test.yml
+      config:
+        params:
+          TERM: vt100
+
+  - name: circuit-breaker-test
+    plan:
+    - get: 8-circuit-breaker
+      trigger: true
+    - task: test
+      file: 8-circuit-breaker/ci/test.yml
+      config:
+        params:
+          TERM: vt100
 
   # Deploy to Cloud Foundry
   - name: monolith-deploy
@@ -14,8 +87,119 @@ jobs:
       trigger: true
       passed: [monolith-test]
     - task: build
+      privileged: true
       file: 1-monolith/ci/build.yml
+      config:
+        params:
+          TERM: vt100
     - put: cf-1
+      params:
+        manifest: build/manifest.yml
+
+  - name: application-state-deploy
+    plan:
+    - get: 2-application-state
+      trigger: true
+      passed: [application-state-test]
+    - task: build
+      privileged: true
+      file: 2-application-state/ci/build.yml
+      config:
+        params:
+          TERM: vt100
+    - put: cf-2
+      params:
+        manifest: build/manifest.yml
+
+  - name: microservice-deploy
+    plan:
+    - get: 3-microservice
+      trigger: true
+      passed: [microservice-test]
+    - task: build
+      privileged: true
+      file: 3-microservice/ci/build.yml
+      config:
+        params:
+          TERM: vt100
+    - put: cf-3
+      params:
+        manifest: build/manifest.yml
+
+  - name: tracing-deploy
+    plan:
+    - get: 4-tracing
+      trigger: true
+      passed: [tracing-test]
+    - task: build
+      privileged: true
+      file: 4-tracing/ci/build.yml
+      config:
+        params:
+          TERM: vt100
+    - put: cf-4
+      params:
+        manifest: build/manifest.yml
+
+  - name: async-communication-deploy
+    plan:
+    - get: 5-async-communication
+      trigger: true
+      passed: [async-communication-test]
+    - task: build
+      privileged: true
+      file: 5-async-communication/ci/build.yml
+      config:
+        params:
+          TERM: vt100
+    - put: cf-5
+      params:
+        manifest: build/manifest.yml
+
+  - name: blue-green-deploy
+    plan:
+    - get: 6-blue-green
+      trigger: true
+      passed: [blue-green-test]
+    - task: build
+      privileged: true
+      file: 6-blue-green/ci/build.yml
+      config:
+        params:
+          TERM: vt100
+    - put: cf-6
+      params:
+        manifest: build/manifest.yml
+
+  - name: scaling-deploy
+    plan:
+    - get: 7-scaling
+      trigger: true
+      passed: [scaling-test]
+    - task: build
+      privileged: true
+      file: 7-scaling/ci/build.yml
+      config:
+        params:
+          TERM: vt100
+    - put: cf-7
+      params:
+        manifest: build/manifest.yml
+
+  - name: circuit-breaker-deploy
+    plan:
+    - get: 8-circuit-breaker
+      trigger: true
+      passed: [circuit-breaker-test]
+    - task: build
+      privileged: true
+      file: 8-circuit-breaker/ci/build.yml
+      config:
+        params:
+          TERM: vt100
+    - put: cf-8
+      params:
+        manifest: build/manifest.yml
 
 resources:
   # GIT resources
@@ -43,11 +227,11 @@ resources:
       uri: git@github.com:CloudCredo/microservices-training-app.git
       branch: 4-tracing
       private_key: {{private_key}}
-  - name: 5-scaling
+  - name: 5-async-communication
     type: git
     source:
       uri: git@github.com:CloudCredo/microservices-training-app.git
-      branch: 5-scaling
+      branch: 5-async-communication
       private_key: {{private_key}}
   - name: 6-blue-green
     type: git
@@ -55,11 +239,11 @@ resources:
       uri: git@github.com:CloudCredo/microservices-training-app.git
       branch: 6-blue-green
       private_key: {{private_key}}
-  - name: 7-async
+  - name: 7-scaling
     type: git
     source:
       uri: git@github.com:CloudCredo/microservices-training-app.git
-      branch: 7-async
+      branch: 7-scaling
       private_key: {{private_key}}
   - name: 8-circuit-breaker
     type: git
@@ -76,7 +260,7 @@ resources:
       username: {{cloudfoundry_admin_username}}
       password: {{cloudfoundry_admin_password}}
       organization: microservices-training
-      space: 1
+      space: '1'
       skip_cert_check: false
   - name: cf-2
     type: cf
@@ -85,7 +269,7 @@ resources:
       username: {{cloudfoundry_admin_username}}
       password: {{cloudfoundry_admin_password}}
       organization: microservices-training
-      space: 2
+      space: '2'
       skip_cert_check: false
   - name: cf-3
     type: cf
@@ -94,7 +278,7 @@ resources:
       username: {{cloudfoundry_admin_username}}
       password: {{cloudfoundry_admin_password}}
       organization: microservices-training
-      space: 3
+      space: '3'
       skip_cert_check: false
   - name: cf-4
     type: cf
@@ -103,7 +287,7 @@ resources:
       username: {{cloudfoundry_admin_username}}
       password: {{cloudfoundry_admin_password}}
       organization: microservices-training
-      space: 4
+      space: '4'
       skip_cert_check: false
   - name: cf-5
     type: cf
@@ -112,7 +296,7 @@ resources:
       username: {{cloudfoundry_admin_username}}
       password: {{cloudfoundry_admin_password}}
       organization: microservices-training
-      space: 5
+      space: '5'
       skip_cert_check: false
   - name: cf-6
     type: cf
@@ -121,7 +305,7 @@ resources:
       username: {{cloudfoundry_admin_username}}
       password: {{cloudfoundry_admin_password}}
       organization: microservices-training
-      space: 6
+      space: '6'
       skip_cert_check: false
   - name: cf-7
     type: cf
@@ -130,7 +314,7 @@ resources:
       username: {{cloudfoundry_admin_username}}
       password: {{cloudfoundry_admin_password}}
       organization: microservices-training
-      space: 7
+      space: '7'
       skip_cert_check: false
   - name: cf-8
     type: cf
@@ -139,5 +323,5 @@ resources:
       username: {{cloudfoundry_admin_username}}
       password: {{cloudfoundry_admin_password}}
       organization: microservices-training
-      space: 8
+      space: '8'
       skip_cert_check: false
