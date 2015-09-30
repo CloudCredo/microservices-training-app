@@ -1,3 +1,5 @@
 #!/bin/sh
 
-./gradlew "$@"
+pwd
+ls
+gradlew "$@"
