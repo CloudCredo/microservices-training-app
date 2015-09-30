@@ -1,139 +1,143 @@
-# GIT resources
-- name: 1-monolith
-  type: git
-  source:
-    uri: git@github.com:CloudCredo/microservices-training-app.git
-    branch: 1-monolith
-    private_key: {{private_key}}
-- name: 2-application-state
-  type: git
-  source:
-    uri: git@github.com:CloudCredo/microservices-training-app.git
-    branch: 2-application-state
-    private_key: {{private_key}}
-- name: 3-microservice
-  type: git
-  source:
-    uri: git@github.com:CloudCredo/microservices-training-app.git
-    branch: 3-microservice
-    private_key: {{private_key}}
-- name: 4-tracing
-  type: git
-  source:
-    uri: git@github.com:CloudCredo/microservices-training-app.git
-    branch: 4-tracing
-    private_key: {{private_key}}
-- name: 5-scaling
-  type: git
-  source:
-    uri: git@github.com:CloudCredo/microservices-training-app.git
-    branch: 5-scaling
-    private_key: {{private_key}}
-- name: 6-blue-green
-  type: git
-  source:
-    uri: git@github.com:CloudCredo/microservices-training-app.git
-    branch: 6-blue-green
-    private_key: {{private_key}}
-- name: 7-async
-  type: git
-  source:
-    uri: git@github.com:CloudCredo/microservices-training-app.git
-    branch: 7-async
-    private_key: {{private_key}}
-- name: 8-circuit-breaker
-  type: git
-  source:
-    uri: git@github.com:CloudCredo/microservices-training-app.git
-    branch: 8-circuit-breaker
-    private_key: {{private_key}}
+jobs:
+  # Unit / Integration tests
+  - name: monolith-test
+    plan:
+    - get: 1-monolith
+      trigger: true
+    - task: test
+      file: 1-monolith/ci/test.yml
 
-# CloudFoundry resources
-- name: cf-1
-  type: cf
-  source:
-    api: {{cloudfoundry_api_uri}}
-    username: {{cloudfoundry_admin_username}}
-    password: {{cloudfoundry_admin_password}}
-    organization: microservices-training
-    space: 1
-    skip_cert_check: false
-- name: cf-2
-  type: cf
-  source:
-    api: {{cloudfoundry_api_uri}}
-    username: {{cloudfoundry_admin_username}}
-    password: {{cloudfoundry_admin_password}}
-    organization: microservices-training
-    space: 2
-    skip_cert_check: false
-- name: cf-3
-  type: cf
-  source:
-    api: {{cloudfoundry_api_uri}}
-    username: {{cloudfoundry_admin_username}}
-    password: {{cloudfoundry_admin_password}}
-    organization: microservices-training
-    space: 3
-    skip_cert_check: false
-- name: cf-4
-  type: cf
-  source:
-    api: {{cloudfoundry_api_uri}}
-    username: {{cloudfoundry_admin_username}}
-    password: {{cloudfoundry_admin_password}}
-    organization: microservices-training
-    space: 4
-    skip_cert_check: false
-- name: cf-5
-  type: cf
-  source:
-    api: {{cloudfoundry_api_uri}}
-    username: {{cloudfoundry_admin_username}}
-    password: {{cloudfoundry_admin_password}}
-    organization: microservices-training
-    space: 5
-    skip_cert_check: false
-- name: cf-6
-  type: cf
-  source:
-    api: {{cloudfoundry_api_uri}}
-    username: {{cloudfoundry_admin_username}}
-    password: {{cloudfoundry_admin_password}}
-    organization: microservices-training
-    space: 6
-    skip_cert_check: false
-- name: cf-7
-  type: cf
-  source:
-    api: {{cloudfoundry_api_uri}}
-    username: {{cloudfoundry_admin_username}}
-    password: {{cloudfoundry_admin_password}}
-    organization: microservices-training
-    space: 7
-    skip_cert_check: false
-- name: cf-8
-  type: cf
-  source:
-    api: {{cloudfoundry_api_uri}}
-    username: {{cloudfoundry_admin_username}}
-    password: {{cloudfoundry_admin_password}}
-    organization: microservices-training
-    space: 8
-    skip_cert_check: false
+  # Deploy to Cloud Foundry
+  - name: monolith-deploy
+    plan:
+    - get: 1-monolith
+      trigger: true
+      passed: [monolith-test]
+    - task: build
+      file: 1-monolith/ci/build.yml
+    - put: cf-1
 
-# Unit / Integration tests
-- name: monolith-test
-  plan:
-  - get: 1-monolith
-    trigger: true
-  - task: test
-    file: 1-monolith/ci/test
+resources:
+  # GIT resources
+  - name: 1-monolith
+    type: git
+    source:
+      uri: git@github.com:CloudCredo/microservices-training-app.git
+      branch: 1-monolith
+      private_key: {{private_key}}
+  - name: 2-application-state
+    type: git
+    source:
+      uri: git@github.com:CloudCredo/microservices-training-app.git
+      branch: 2-application-state
+      private_key: {{private_key}}
+  - name: 3-microservice
+    type: git
+    source:
+      uri: git@github.com:CloudCredo/microservices-training-app.git
+      branch: 3-microservice
+      private_key: {{private_key}}
+  - name: 4-tracing
+    type: git
+    source:
+      uri: git@github.com:CloudCredo/microservices-training-app.git
+      branch: 4-tracing
+      private_key: {{private_key}}
+  - name: 5-scaling
+    type: git
+    source:
+      uri: git@github.com:CloudCredo/microservices-training-app.git
+      branch: 5-scaling
+      private_key: {{private_key}}
+  - name: 6-blue-green
+    type: git
+    source:
+      uri: git@github.com:CloudCredo/microservices-training-app.git
+      branch: 6-blue-green
+      private_key: {{private_key}}
+  - name: 7-async
+    type: git
+    source:
+      uri: git@github.com:CloudCredo/microservices-training-app.git
+      branch: 7-async
+      private_key: {{private_key}}
+  - name: 8-circuit-breaker
+    type: git
+    source:
+      uri: git@github.com:CloudCredo/microservices-training-app.git
+      branch: 8-circuit-breaker
+      private_key: {{private_key}}
 
-# Deploy to Cloud Foundry
-- name: monolith-deploy
-  plan:
-  - get: 1-monolith
-    trigger: true
-    passed: monolith-test
-  - put: cf-1
+  # CloudFoundry resources
+  - name: cf-1
+    type: cf
+    source:
+      api: {{cloudfoundry_api_uri}}
+      username: {{cloudfoundry_admin_username}}
+      password: {{cloudfoundry_admin_password}}
+      organization: microservices-training
+      space: 1
+      skip_cert_check: false
+  - name: cf-2
+    type: cf
+    source:
+      api: {{cloudfoundry_api_uri}}
+      username: {{cloudfoundry_admin_username}}
+      password: {{cloudfoundry_admin_password}}
+      organization: microservices-training
+      space: 2
+      skip_cert_check: false
+  - name: cf-3
+    type: cf
+    source:
+      api: {{cloudfoundry_api_uri}}
+      username: {{cloudfoundry_admin_username}}
+      password: {{cloudfoundry_admin_password}}
+      organization: microservices-training
+      space: 3
+      skip_cert_check: false
+  - name: cf-4
+    type: cf
+    source:
+      api: {{cloudfoundry_api_uri}}
+      username: {{cloudfoundry_admin_username}}
+      password: {{cloudfoundry_admin_password}}
+      organization: microservices-training
+      space: 4
+      skip_cert_check: false
+  - name: cf-5
+    type: cf
+    source:
+      api: {{cloudfoundry_api_uri}}
+      username: {{cloudfoundry_admin_username}}
+      password: {{cloudfoundry_admin_password}}
+      organization: microservices-training
+      space: 5
+      skip_cert_check: false
+  - name: cf-6
+    type: cf
+    source:
+      api: {{cloudfoundry_api_uri}}
+      username: {{cloudfoundry_admin_username}}
+      password: {{cloudfoundry_admin_password}}
+      organization: microservices-training
+      space: 6
+      skip_cert_check: false
+  - name: cf-7
+    type: cf
+    source:
+      api: {{cloudfoundry_api_uri}}
+      username: {{cloudfoundry_admin_username}}
+      password: {{cloudfoundry_admin_password}}
+      organization: microservices-training
+      space: 7
+      skip_cert_check: false
+  - name: cf-8
+    type: cf
+    source:
+      api: {{cloudfoundry_api_uri}}
+      username: {{cloudfoundry_admin_username}}
+      password: {{cloudfoundry_admin_password}}
+      organization: microservices-training
+      space: 8
+      skip_cert_check: false
