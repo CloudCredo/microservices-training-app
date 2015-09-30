@@ -12,7 +12,7 @@ angular.module('myMicroservice', [])
     (function fetchData() {
       $scope.microserviceData = MyMicroserviceService.getData();
 
-      $timeout(5000, fetchData());
+      $timeout(fetchData, 5000);
     })()
   })
 
