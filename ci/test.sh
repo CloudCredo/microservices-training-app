@@ -1,7 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
 set -ex
 
 export TERM=vt100
 
-./gradlew "$@"
+#./ci/gradlew test
+
+pushd request-subscriber
+bundle install
+bundle exec rspec
+popd

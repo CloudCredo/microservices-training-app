@@ -10,7 +10,7 @@ require 'stdout_handler'
 $stdout.sync = true
 trap(:INT) { exit }
 
-redis_credentials = CF::App::Credentials.find_by_service_name('cloudcredo-training-redis')
+redis_credentials = CF::App::Credentials.find_by_service_name('async-redis')
 redis_url = redis_credentials ? redis_credentials.fetch('url') : 'redis://localhost:6379/0'
 redis = Redis.new(url: redis_url)
 stdout_handler = StdoutHandler.new
