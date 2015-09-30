@@ -1,0 +1,12 @@
+---
+platform: linux
+
+image: docker:///java#8-jdk
+
+inputs:
+- name: 2-application-state
+  path: .
+
+run:
+  path: ./ci/gradlew.sh
+  args: [bootRepackage]
