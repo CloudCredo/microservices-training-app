@@ -3,6 +3,7 @@
     <ul class="nav nav-tabs">
       <li ng-class="{active: page == 'feedback' || !page}"><a href="#/feedback-submitted/feedback">Feedback</a></li>
       <li ng-class="{active: page == 'questions'}"><a href="#/feedback-submitted/questions">Questions</a></li>
+      <li ng-class="{active: page == 'my-microservice'}"><a href="#/feedback-submitted/my-microservice">My Microservice</a></li>
     </ul>
   </div>
 
@@ -10,12 +11,17 @@
     <div ng-switch-default>
       <cn-aggregated-feedback></cn-aggregated-feedback>
     </div>
+
     <div ng-switch-when="questions">
       <div class="container">
         <cn-question-form></cn-question-form>
         <hr>
         <cn-questions-and-answers></cn-questions-and-answers>
       </div>
+    </div>
+
+    <div ng-switch-when="my-microservice">
+      <cn-my-microservice></cn-my-microservice>
     </div>
   </div>
 </div>
