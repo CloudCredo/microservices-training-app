@@ -1,14 +1,14 @@
 buildscript {
-    ext {
-        springBootVersion = '1.2.5.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE")
-    }
+  ext {
+    springBootVersion = '1.2.5.RELEASE'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    classpath("io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE")
+  }
 }
 
 apply plugin: 'groovy'
@@ -25,22 +25,22 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
     //Spring Framework
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-redis")
+  compile("org.springframework.boot:spring-boot-starter-web")
+  compile("org.springframework.boot:spring-boot-starter-redis")
 
-    // ConnectionPool
-    compile("org.apache.commons:commons-pool2:2.2")
+  // ConnectionPool
+  compile("org.apache.commons:commons-pool2:2.2")
 
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile("org.spockframework:spock-spring:1.0-groovy-2.4")
-    testCompile("com.github.kstyrc:embedded-redis:0.6")
+  testCompile("org.springframework.boot:spring-boot-starter-test")
+  testCompile("org.spockframework:spock-spring:1.0-groovy-2.4")
+  testCompile("com.github.kstyrc:embedded-redis:0.6")
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+  gradleVersion = '2.3'
 }
