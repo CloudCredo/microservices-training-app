@@ -1,0 +1,12 @@
+---
+platform: linux
+
+image: docker:///java:8-jre
+
+inputs:
+- name: 1-monolith
+  path: .
+
+run:
+  path: ./ci/gradlew.sh test
+
