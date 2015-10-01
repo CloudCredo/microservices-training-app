@@ -4,6 +4,7 @@ $LOAD_PATH << 'lib'
 require 'cf-app-utils'
 require 'redis'
 
+require 'metadata_aggregator'
 require 'redis_subscriber'
 require 'stdout_handler'
 
@@ -14,6 +15,8 @@ redis_credentials = CF::App::Credentials.find_by_service_name('async-redis')
 redis_url = redis_credentials ? redis_credentials.fetch('url') : 'redis://localhost:6379/0'
 redis = Redis.new(url: redis_url)
 stdout_handler = StdoutHandler.new
+metadata_aggregator = MetadataAggregator.new(redis)
 
 subscriber = RedisSubscriber.new(redis)
+subscriber.subscribe('requestMetadata', metadata_aggregator)
 subscriber.subscribe('requestMetadata', stdout_handler)
