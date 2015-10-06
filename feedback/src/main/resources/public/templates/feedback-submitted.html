@@ -4,6 +4,7 @@
       <li ng-class="{active: page == 'feedback' || !page}"><a href="#/feedback-submitted/feedback">Feedback</a></li>
       <li ng-class="{active: page == 'questions'}"><a href="#/feedback-submitted/questions">Questions</a></li>
       <li ng-class="{active: page == 'my-microservice'}"><a href="#/feedback-submitted/my-microservice">My Microservice</a></li>
+      <li ng-class="{active: page == 'async-workers'}"><a href="#/feedback-submitted/async-workers">Async Workers</a></li>
     </ul>
   </div>
 
@@ -22,6 +23,10 @@
 
     <div ng-switch-when="my-microservice">
       <cn-my-microservice></cn-my-microservice>
+    </div>
+
+    <div ng-switch-when="async-workers">
+      <cn-async-workers></cn-async-workers>
     </div>
   </div>
 </div>

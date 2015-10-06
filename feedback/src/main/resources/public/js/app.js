@@ -2,6 +2,7 @@ angular.module('app', [
   'feedback',
   'questions',
   'myMicroservice',
+  'asyncWorkers',
 
   // Third party libs
   'ngRoute',

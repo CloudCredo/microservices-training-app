@@ -4,7 +4,11 @@ ruby '2.2.2'
 
 gem 'redis'
 gem 'cf-app-utils'
+gem 'sinatra'
 
 group :development do
   gem 'rspec'
+  gem 'rack'
+  gem 'rack-test'
+  gem 'timecop'
 end

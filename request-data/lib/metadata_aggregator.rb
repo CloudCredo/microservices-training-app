@@ -5,7 +5,11 @@ class MetadataAggregator
     @aggregated_metadata = {}
   end
 
-  def aggregate(request_metadata)
+  def on_subscribe
+
+  end
+
+  def handle_message(request_metadata)
     request_metadata = JSON.parse(request_metadata)
     increment(request_metadata['method'], request_metadata['path'])
   end

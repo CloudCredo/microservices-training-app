@@ -1,10 +1,17 @@
 ---
 applications:
-- name: request-subscriber
+- name: request-data-worker
   memory: 128M
   no-route: true
-  path: ./request-subscriber
-  command: bundle exec ./console_worker
+  path: ./request-data
+  command: bundle exec ./worker
+  services:
+  - async-redis
+
+- name: request-data-api
+  memory: 128M
+  path: ./request-data
+  random-route: true
   services:
   - async-redis
 
@@ -24,4 +31,6 @@ applications:
   services:
   - questions
   - feedback-redis
+  - async-redis
+  - request-data
 

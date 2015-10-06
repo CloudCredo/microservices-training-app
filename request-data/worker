@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << 'lib'
+
+require 'redis_client_factory'
+require 'redis_subscriber'
+require 'stdout_handler'
+require 'metadata_aggregator'
+require 'request_rate_logger'
+
+$stdout.sync = true
+trap(:INT) { exit }
+
+redis = RedisClientFactory.create('async-redis')
+
+stdout_handler = StdoutHandler.new
+metadata_aggregator = MetadataAggregator.new(redis)
+request_rate_logger = RequestRateLogger.new(redis)
+
+subscriber = RedisSubscriber.new(redis)
+subscriber.subscribe('requestMetadata', stdout_handler)
+subscriber.subscribe('requestMetadata', metadata_aggregator)
+subscriber.subscribe('requestMetadata', request_rate_logger)
+subscriber.join

@@ -15,7 +15,12 @@ public class MicroservicesContext {
   }
 
   @Bean
-  public RestProxy myMicroservice(@Value("${MY_MICROSERVICE_URL}") String url) {
+   public RestProxy myMicroservice(@Value("${MY_MICROSERVICE_URL}") String url) {
+    return new RestProxy(URI.create("http://" + url));
+  }
+
+  @Bean
+  public RestProxy requestDataService(@Value("${vcap.services.request-data.credentials.url}") String url) {
     return new RestProxy(URI.create("http://" + url));
   }
 }

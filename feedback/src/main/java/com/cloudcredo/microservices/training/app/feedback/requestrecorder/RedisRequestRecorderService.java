@@ -17,6 +17,6 @@ class RedisRequestRecorderService implements RequestRecorderService {
   @Override
   public void recordAPICall(String path, String method) {
     RequestMetadata metadata = new RequestMetadata(method, path);
-    redisTemplate.convertAndSend("requestMetadata", metadata);
+    redisTemplate.opsForList().leftPush("requestMetadata", metadata);
   }
 }
