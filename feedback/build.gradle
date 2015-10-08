@@ -22,7 +22,7 @@ apply plugin: 'io.spring.dependency-management'
 
 jar {
   baseName = 'feedback'
-  version = '0.7.0-SNAPSHOT'
+  version = '0.8.0-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

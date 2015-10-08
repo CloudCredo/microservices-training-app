@@ -4,7 +4,7 @@ platform: linux
 image: docker:///java#8-jdk
 
 inputs:
-- name: 7-scaling
+- name: 8-circuit-breaker
   path: .
 
 run:
