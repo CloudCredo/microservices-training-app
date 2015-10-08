@@ -6,22 +6,22 @@ class RedisSubscriber
     @handlers = {}
   end
 
-  def subscribe(key, handler)
-    handlers = @handlers.fetch(key, Set.new)
+  def subscribe(redis_key, handler)
+    handlers = @handlers.fetch(redis_key, Set.new)
     handlers << handler
-    @handlers[key] = handlers
+    @handlers[redis_key] = handlers
     handler.on_subscribe
 
-    return @threads[key] if @threads[key]
+    return @threads[redis_key] if @threads[redis_key]
 
     thread = Thread.new do
       loop do
-        data = @redis.blpop(key)
-        @handlers[key].each { |handler| handler.handle_message(data) }
+        _, value = @redis.blpop(redis_key)
+        @handlers[redis_key].each { |handler| handler.handle_message(value) }
       end
     end
 
-    @threads[key] = thread
+    @threads[redis_key] = thread
   end
 
   def join
