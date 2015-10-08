@@ -17,14 +17,14 @@ applications:
 
 - name: questions
   memory: 512M
-  path: ./questions/build/libs/questions-0.6.0-SNAPSHOT.jar
+  path: ./questions/build/libs/questions-0.7.0-SNAPSHOT.jar
   random-route: true
   services:
   - questions-redis
 
 - name: feedback
   memory: 512M
-  path: ./feedback/build/libs/feedback-0.6.0-SNAPSHOT.jar
+  path: ./feedback/build/libs/feedback-0.7.0-SNAPSHOT.jar
   random-route: true
   env:
     MY_MICROSERVICE_URL: 'localhost' # Microservice bonus task!

@@ -4,7 +4,7 @@ platform: linux
 image: docker:///java#8-jdk
 
 inputs:
-- name: 6-blue-green
+- name: 7-scaling
   path: .
 
 run:
