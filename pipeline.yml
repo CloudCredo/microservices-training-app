@@ -1,6 +1,6 @@
 jobs:
   # Unit / Integration tests
-  - name: monolith-test
+  - name: 1-monolith-test
     plan:
     - get: 1-monolith
       trigger: true
@@ -10,7 +10,7 @@ jobs:
         params:
           TERM: vt100
 
-  - name: application-state-test
+  - name: 2-application-state-test
     plan:
     - get: 2-application-state
       trigger: true
@@ -20,7 +20,7 @@ jobs:
         params:
           TERM: vt100
 
-  - name: microservice-test
+  - name: 3-microservice-test
     plan:
     - get: 3-microservice
       trigger: true
@@ -30,17 +30,17 @@ jobs:
         params:
           TERM: vt100
 
-  - name: tracing-test
+  - name: 4-distributed-tracing-test
     plan:
-    - get: 4-tracing
+    - get: 4-distributed-tracing
       trigger: true
     - task: test
-      file: 4-tracing/ci/test.yml
+      file: 4-distributed-tracing/ci/test.yml
       config:
         params:
           TERM: vt100
 
-  - name: async-communication-test
+  - name: 5-async-communication-test
     plan:
     - get: 5-async-communication
       trigger: true
@@ -50,7 +50,7 @@ jobs:
         params:
           TERM: vt100
 
-  - name: blue-green-test
+  - name: 6-blue-green-test
     plan:
     - get: 6-blue-green
       trigger: true
@@ -60,7 +60,7 @@ jobs:
         params:
           TERM: vt100
 
-  - name: scaling-test
+  - name: 7-scaling-test
     plan:
     - get: 7-scaling
       trigger: true
@@ -70,7 +70,7 @@ jobs:
         params:
           TERM: vt100
 
-  - name: circuit-breaker-test
+  - name: 8-circuit-breaker-test
     plan:
     - get: 8-circuit-breaker
       trigger: true
@@ -81,11 +81,11 @@ jobs:
           TERM: vt100
 
   # Deploy to Cloud Foundry
-  - name: monolith-deploy
+  - name: 1-monolith-deploy
     plan:
     - get: 1-monolith
       trigger: true
-      passed: [monolith-test]
+      passed: [1-monolith-test]
     - task: build
       privileged: true
       file: 1-monolith/ci/build.yml
@@ -96,11 +96,11 @@ jobs:
       params:
         manifest: build/manifest.yml
 
-  - name: application-state-deploy
+  - name: 2-application-state-deploy
     plan:
     - get: 2-application-state
       trigger: true
-      passed: [application-state-test]
+      passed: [2-application-state-test]
     - task: build
       privileged: true
       file: 2-application-state/ci/build.yml
@@ -111,11 +111,11 @@ jobs:
       params:
         manifest: build/manifest.yml
 
-  - name: microservice-deploy
+  - name: 3-microservice-deploy
     plan:
     - get: 3-microservice
       trigger: true
-      passed: [microservice-test]
+      passed: [3-microservice-test]
     - task: build
       privileged: true
       file: 3-microservice/ci/build.yml
@@ -126,14 +126,14 @@ jobs:
       params:
         manifest: build/manifest.yml
 
-  - name: tracing-deploy
+  - name: 4-distributed-tracing-deploy
     plan:
-    - get: 4-tracing
+    - get: 4-distributed-tracing
       trigger: true
-      passed: [tracing-test]
+      passed: [4-distributed-tracing-test]
     - task: build
       privileged: true
-      file: 4-tracing/ci/build.yml
+      file: 4-distributed-tracing/ci/build.yml
       config:
         params:
           TERM: vt100
@@ -141,11 +141,11 @@ jobs:
       params:
         manifest: build/manifest.yml
 
-  - name: async-communication-deploy
+  - name: 5-async-communication-deploy
     plan:
     - get: 5-async-communication
       trigger: true
-      passed: [async-communication-test]
+      passed: [5-async-communication-test]
     - task: build
       privileged: true
       file: 5-async-communication/ci/build.yml
@@ -156,11 +156,11 @@ jobs:
       params:
         manifest: build/manifest.yml
 
-  - name: blue-green-deploy
+  - name: 6-blue-green-deploy
     plan:
     - get: 6-blue-green
       trigger: true
-      passed: [blue-green-test]
+      passed: [6-blue-green-test]
     - task: build
       privileged: true
       file: 6-blue-green/ci/build.yml
@@ -171,11 +171,11 @@ jobs:
       params:
         manifest: build/manifest.yml
 
-  - name: scaling-deploy
+  - name: 7-scaling-deploy
     plan:
     - get: 7-scaling
       trigger: true
-      passed: [scaling-test]
+      passed: [7-scaling-test]
     - task: build
       privileged: true
       file: 7-scaling/ci/build.yml
@@ -186,11 +186,11 @@ jobs:
       params:
         manifest: build/manifest.yml
 
-  - name: circuit-breaker-deploy
+  - name: 8-circuit-breaker-deploy
     plan:
     - get: 8-circuit-breaker
       trigger: true
-      passed: [circuit-breaker-test]
+      passed: [8-circuit-breaker-test]
     - task: build
       privileged: true
       file: 8-circuit-breaker/ci/build.yml
@@ -221,11 +221,11 @@ resources:
       uri: git@github.com:CloudCredo/microservices-training-app.git
       branch: 3-microservice
       private_key: {{private_key}}
-  - name: 4-tracing
+  - name: 4-distributed-tracing
     type: git
     source:
       uri: git@github.com:CloudCredo/microservices-training-app.git
-      branch: 4-tracing
+      branch: 4-distributed-tracing
       private_key: {{private_key}}
   - name: 5-async-communication
     type: git
