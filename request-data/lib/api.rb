@@ -38,7 +38,7 @@ class API < Sinatra::Base
       path = key_components[2]
       path_map = map.fetch(method, {})
       map[method] = path_map
-      path_map[path] = redis.get(key)
+      path_map[path] = redis.get(key).to_i
     end
   end
 
@@ -54,7 +54,7 @@ class API < Sinatra::Base
   end
 
   def worker_requests_per_second(worker_key)
-    requests = redis.get("#{worker_key}:requestCount")
+    requests = redis.get("#{worker_key}:requestCount").to_i
     worker_start_time = Time.parse(redis.get("#{worker_key}:startTime"))
     seconds_running = (Time.now - worker_start_time)
 

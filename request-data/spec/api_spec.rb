@@ -56,12 +56,12 @@ RSpec.describe API do
         aggregatedMetadata:POST:/feedback
         aggregatedMetadata:POST:/questions
       ])
-      allow(redis).to receive(:get).with('aggregatedMetadata:GET:/feedback').and_return(2)
-      allow(redis).to receive(:get).with('aggregatedMetadata:POST:/feedback').and_return(1)
-      allow(redis).to receive(:get).with('aggregatedMetadata:POST:/questions').and_return(3)
+      allow(redis).to receive(:get).with('aggregatedMetadata:GET:/feedback').and_return('2')
+      allow(redis).to receive(:get).with('aggregatedMetadata:POST:/feedback').and_return('1')
+      allow(redis).to receive(:get).with('aggregatedMetadata:POST:/questions').and_return('3')
       allow(redis).to receive(:smembers).with('requestRateLogger:instances').and_return(%w[requestRateLogger:worker1 requestRateLogger:worker2])
-      allow(redis).to receive(:get).with('requestRateLogger:worker1:requestCount').and_return(20)
-      allow(redis).to receive(:get).with('requestRateLogger:worker2:requestCount').and_return(60)
+      allow(redis).to receive(:get).with('requestRateLogger:worker1:requestCount').and_return('20')
+      allow(redis).to receive(:get).with('requestRateLogger:worker2:requestCount').and_return('60')
       allow(redis).to receive(:get).with('requestRateLogger:worker1:startTime').and_return((Time.now - 2).to_s)
       allow(redis).to receive(:get).with('requestRateLogger:worker2:startTime').and_return((Time.now - 3).to_s)
 
