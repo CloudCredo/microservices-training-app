@@ -18,12 +18,12 @@ class RequestRateLogger
 
   attr_reader :redis
 
-  def application_id
-    JSON.parse(ENV.fetch('VCAP_APPLICATION')).fetch('application_id')
+  def instance_id
+    ENV.fetch('CF_INSTANCE_INDEX')
   end
 
   def worker_key_prefix
-    "requestRateLogger:#{application_id}"
+    "requestRateLogger:#{instance_id}"
   end
 
   def register_worker
