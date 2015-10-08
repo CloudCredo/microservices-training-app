@@ -20,6 +20,7 @@ class API < Sinatra::Base
 
   get '/request-data' do
     {
+      requests: request_data,
       workers: worker_data
     }.to_json
   end
@@ -27,6 +28,19 @@ class API < Sinatra::Base
   private
 
   attr_reader :redis
+
+  def request_data
+    keys = redis.keys('aggregatedMetadata*')
+
+    keys.each_with_object({}) do |key, map|
+      key_components = key.split(/:/)
+      method = key_components[1]
+      path = key_components[2]
+      path_map = map.fetch(method, {})
+      map[method] = path_map
+      path_map[path] = redis.get(key)
+    end
+  end
 
   def worker_data
     worker_keys = redis.smembers('requestRateLogger:instances')

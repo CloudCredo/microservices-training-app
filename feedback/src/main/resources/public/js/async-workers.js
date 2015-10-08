@@ -11,7 +11,7 @@ angular.module('asyncWorkers', ['chart.js'])
   .controller('AsyncWorkersController', function ($scope, $timeout, AsyncWorkersService) {
     (function updateData() {
       function updateRequestMetadata(data) {
-
+        $scope.requestData = data.requests;
       }
 
       function updateRequestRateChart(data) {
