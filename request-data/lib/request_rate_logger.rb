@@ -19,7 +19,7 @@ class RequestRateLogger
   attr_reader :redis
 
   def application_id
-    ENV.fetch('VCAP_APPLICATION').fetch('application_id')
+    JSON.parse(ENV.fetch('VCAP_APPLICATION')).fetch('application_id')
   end
 
   def worker_key_prefix

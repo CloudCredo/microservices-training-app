@@ -16,7 +16,7 @@ RSpec.describe(RequestRateLogger) do
     stub_const('ENV', {
       'VCAP_APPLICATION' => {
         'application_id' => application_id
-      }
+      }.to_json
     })
 
     Timecop.freeze

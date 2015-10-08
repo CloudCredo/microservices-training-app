@@ -1,3 +1,4 @@
+/feedback/src/main/resources/application-cloudfoundry.properties
 **/.gradle
 **/build/
 /.idea/
