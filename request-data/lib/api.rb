@@ -48,14 +48,15 @@ class API < Sinatra::Base
     worker_keys.map do |worker_key|
       {
         name: worker_key.split(':').last,
-        requestRate: worker_request_rate(worker_key)
+        requestRate: worker_requests_per_second(worker_key)
       }
     end
   end
 
-  def worker_request_rate(worker_key)
+  def worker_requests_per_second(worker_key)
     requests = redis.get("#{worker_key}:requestCount")
-    seconds_running = Time.now - redis.get("#{worker_key}:startTime")
+    worker_start_time = Time.parse(redis.get("#{worker_key}:startTime"))
+    seconds_running = (Time.now - worker_start_time)
 
     requests / seconds_running
   end
