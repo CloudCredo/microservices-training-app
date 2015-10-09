@@ -5,7 +5,7 @@ require 'request_rate_logger'
 
 RSpec.describe(RequestRateLogger) do
 
-  def application_id
+  def instance_id
     '0'
   end
 
@@ -14,7 +14,7 @@ RSpec.describe(RequestRateLogger) do
 
   before(:each) do
     stub_const('ENV', {
-      'CF_INSTANCE_INDEX' => application_id
+      'CF_INSTANCE_INDEX' => instance_id
     })
 
     Timecop.freeze
@@ -23,7 +23,7 @@ RSpec.describe(RequestRateLogger) do
 
   describe '#on_subscribe' do
     it 'adds the worker key prefix to the set of all worker keys' do
-      expect(redis).to receive(:sadd).with('requestRateLogger:instances', "requestRateLogger:#{application_id}")
+      expect(redis).to receive(:sadd).with('requestRateLogger:instances', "requestRateLogger:#{instance_id}")
       allow(redis).to receive(:set)
 
       rate_logger.on_subscribe
@@ -31,7 +31,7 @@ RSpec.describe(RequestRateLogger) do
 
     it 'updates the worker start time in Redis' do
       allow(redis).to receive(:sadd)
-      expect(redis).to receive(:set).with("requestRateLogger:#{application_id}:startTime", Time.now, ex: 60)
+      expect(redis).to receive(:set).with("requestRateLogger:#{instance_id}:startTime", Time.now, ex: 60)
 
       rate_logger.on_subscribe
     end
@@ -39,7 +39,7 @@ RSpec.describe(RequestRateLogger) do
 
   describe '#handle_message' do
     it 'counts the number of requests it receives' do
-      expect(redis).to receive(:incr).with("requestRateLogger:#{application_id}:requestCount")
+      expect(redis).to receive(:incr).with("requestRateLogger:#{instance_id}:requestCount")
 
       rate_logger.handle_message('')
     end

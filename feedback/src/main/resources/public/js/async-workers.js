@@ -45,8 +45,17 @@ angular.module('asyncWorkers', ['chart.js'])
           return workerData.requestRate;
         }
 
+        function byWorkerName(workerA, workerB) {
+          return workerA.name.localeCompare(workerB.name)
+        }
+
+        data = data.sort(byWorkerName);
+
         $scope.requestRateChartLabels = data.map(toWorkerName);
-        $scope.requestRateChartData = data.map(toRequestRate);
+        $scope.requestRateChartData = [data.map(toRequestRate)];
+
+        console.log($scope.requestRateChartLabels);
+        console.log($scope.requestRateChartData);
       }
 
       AsyncWorkersService.getData().$promise.then(function (response) {
