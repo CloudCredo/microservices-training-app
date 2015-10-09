@@ -5,7 +5,7 @@ require 'worker'
 
 RSpec.describe Worker do
 
-  let(:redis) { instance_double(Redis, 'redis', set: nil, sadd: nil) }
+  let(:redis) { instance_double(Redis, 'redis', get: nil, set: nil, sadd: nil, incr: nil) }
   let(:worker_instance_number) { '0' }
   let(:worker_key_prefix) { "requestRateLogger:#{worker_instance_number}" }
 
@@ -24,6 +24,11 @@ RSpec.describe Worker do
 
     it 'sets the start time in Redis, with a TTL of one minute' do
       expect(redis).to receive(:set).with("#{worker_key_prefix}:startTime", Time.now, ex: 60)
+      worker.register
+    end
+
+    it 'sets the worker\'s request count to 0' do
+      expect(redis).to receive(:set).with("#{worker_key_prefix}:requestCount", 0)
       worker.register
     end
   end
@@ -49,6 +54,23 @@ RSpec.describe Worker do
     it 'increments the request count in Redis' do
       expect(redis).to receive(:incr).with("#{worker_key_prefix}:requestCount")
       worker.increment_request_count
+    end
+
+    context 'when the worker does not already exist' do
+      it 'adds the worker to the set of all instances' do
+        expect(redis).to receive(:sadd).with('requestRateLogger:instances', worker_key_prefix)
+        worker.increment_request_count
+      end
+
+      it 'sets the start time in Redis, with a TTL of one minute' do
+        expect(redis).to receive(:set).with("#{worker_key_prefix}:startTime", Time.now, ex: 60)
+        worker.increment_request_count
+      end
+
+      it 'sets the worker\'s request count to 0' do
+        expect(redis).to receive(:set).with("#{worker_key_prefix}:requestCount", 0)
+        worker.increment_request_count
+      end
     end
   end
 

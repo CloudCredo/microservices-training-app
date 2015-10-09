@@ -23,6 +23,7 @@ class Worker
   def register
     redis.sadd(WORKER_INSTANCES_SET_KEY, worker_key_prefix)
     redis.set("#{worker_key_prefix}:startTime", Time.now, ex: 60)
+    redis.set("#{worker_key_prefix}:requestCount", 0)
     self
   end
 
@@ -40,6 +41,7 @@ class Worker
   end
 
   def increment_request_count
+    register unless exists?
     redis.incr("#{worker_key_prefix}:requestCount")
   end
 

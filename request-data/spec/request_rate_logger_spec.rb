@@ -9,7 +9,7 @@ RSpec.describe(RequestRateLogger) do
     '0'
   end
 
-  let(:redis) { instance_double(Redis) }
+  let(:redis) { instance_double(Redis, get: nil, set: nil, sadd: nil) }
   subject(:rate_logger) { described_class.new(redis) }
 
   before(:each) do
