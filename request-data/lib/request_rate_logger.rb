@@ -1,4 +1,5 @@
 require 'redis'
+require 'worker'
 
 class RequestRateLogger
   def initialize(redis)
