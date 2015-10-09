@@ -4,6 +4,10 @@ class Worker
   private_constant :WORKER_INSTANCES_SET_KEY
 
   class << self
+    def this_worker(redis)
+      Worker.new(redis, "requestRateLogger:#{ENV.fetch('CF_INSTANCE_INDEX')}")
+    end
+
     def all_workers(redis)
       redis.smembers(WORKER_INSTANCES_SET_KEY).map do |worker_key|
         Worker.new(redis, worker_key)
@@ -11,40 +15,49 @@ class Worker
     end
   end
 
-  def initialize(redis, worker_key)
+  def initialize(redis, worker_key_prefix)
     @redis = redis
-    @worker_key = worker_key
+    @worker_key_prefix = worker_key_prefix
+  end
+
+  def register
+    redis.sadd(WORKER_INSTANCES_SET_KEY, worker_key_prefix)
+    redis.set("#{worker_key_prefix}:startTime", Time.now, ex: 60)
+    self
   end
 
   def deregister
-    redis.srem(WORKER_INSTANCES_SET_KEY, @worker_key)
+    redis.srem(WORKER_INSTANCES_SET_KEY, worker_key_prefix)
   end
 
   def name
-    worker_key.split(':').last
+    worker_key_prefix.split(':').last
   end
 
   def requests_per_second
     seconds_running = (Time.now - start_time)
-
     request_count / seconds_running
   end
 
+  def increment_request_count
+    redis.incr("#{worker_key_prefix}:requestCount")
+  end
+
   def request_count
-    count = redis.get("#{worker_key}:requestCount")
+    count = redis.get("#{worker_key_prefix}:requestCount")
     count ? count.to_i : nil
   end
 
   def start_time
-    startTime = redis.get("#{worker_key}:startTime")
+    startTime = redis.get("#{worker_key_prefix}:startTime")
     startTime ? Time.parse(startTime) : nil
   end
 
   def exists?
-    request_count && start_time
+    not (request_count.nil? || start_time.nil?)
   end
 
   private
 
-  attr_reader :redis, :worker_key
+  attr_reader :redis, :worker_key_prefix
 end

@@ -6,7 +6,7 @@ require 'request_rate_logger'
 RSpec.describe(RequestRateLogger) do
 
   def application_id
-    'a0e43965-f54e-4e63-9a03-36f80e4ac2d8'
+    '0'
   end
 
   let(:redis) { instance_double(Redis) }
@@ -14,9 +14,7 @@ RSpec.describe(RequestRateLogger) do
 
   before(:each) do
     stub_const('ENV', {
-      'VCAP_APPLICATION' => {
-        'application_id' => application_id
-      }.to_json
+      'CF_INSTANCE_INDEX' => application_id
     })
 
     Timecop.freeze
@@ -33,7 +31,7 @@ RSpec.describe(RequestRateLogger) do
 
     it 'updates the worker start time in Redis' do
       allow(redis).to receive(:sadd)
-      expect(redis).to receive(:set).with("requestRateLogger:#{application_id}:startTime", Time.now)
+      expect(redis).to receive(:set).with("requestRateLogger:#{application_id}:startTime", Time.now, ex: 60)
 
       rate_logger.on_subscribe
     end
