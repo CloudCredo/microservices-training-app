@@ -37,7 +37,7 @@ RSpec.describe Worker do
 
   describe '#name' do
     it 'is the worker instance number' do
-      expect(worker.name).to eq worker_instance_number
+      expect(worker.name).to eq "Worker #{worker_instance_number}"
     end
   end
 

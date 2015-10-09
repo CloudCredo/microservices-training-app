@@ -31,7 +31,7 @@ class Worker
   end
 
   def name
-    worker_key_prefix.split(':').last
+    "Worker #{worker_key_prefix.split(':').last}"
   end
 
   def requests_per_second
