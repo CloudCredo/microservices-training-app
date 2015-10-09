@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'json'
 
+require 'worker'
+
 class API < Sinatra::Base
 
   def initialize(redis)
@@ -42,23 +44,19 @@ class API < Sinatra::Base
     end
   end
 
-  def worker_data
-    worker_keys = redis.smembers('requestRateLogger:instances')
 
-    worker_keys.map do |worker_key|
-      {
-        name: worker_key.split(':').last,
-        requestRate: worker_requests_per_second(worker_key)
+  def worker_data
+    workers = Worker.all_workers(redis)
+
+    workers.each_with_object([]) do |worker, worker_data|
+      return worker_data unless worker.exists?
+
+      worker_data << {
+        name: worker.name,
+        requestRate: worker.requests_per_second
       }
     end
   end
 
-  def worker_requests_per_second(worker_key)
-    requests = redis.get("#{worker_key}:requestCount").to_i
-    worker_start_time = Time.parse(redis.get("#{worker_key}:startTime"))
-    seconds_running = (Time.now - worker_start_time)
-
-    requests / seconds_running
-  end
 
 end
