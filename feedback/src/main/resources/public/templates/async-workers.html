@@ -1,11 +1,12 @@
 <div id="question-form" class="row">
   <h3>API Request Info</h3>
   <div class="container">
-    <div class="row">
-  
-    </div>
-    <div class="row">
-      <chart-bar chart-data="requestRateChartData" labels="requestRateChartLabels"></chart-bar>
-    </div>
+    <canvas id="radar"
+            class="chart chart-radar"
+            chart-data="requestTypeChartData"
+            chart-labels="requestTypeChartLabels"
+            chart-series="requestTypeChartSeries"
+            chart-legend="false">
+    </canvas>
   </div>
 </div>
