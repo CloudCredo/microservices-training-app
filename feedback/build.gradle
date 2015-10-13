@@ -45,6 +45,7 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter-web")
   compile("org.springframework.boot:spring-boot-starter-redis")
   compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+  compile('org.springframework.cloud:spring-cloud-starter-hystrix:1.0.3.RELEASE')
 
   // ConnectionPool
   compile("org.apache.commons:commons-pool2:2.2")

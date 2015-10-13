@@ -1,6 +1,7 @@
 package com.cloudcredo.microservices.training.app.feedback.api;
 
 import com.cloudcredo.microservices.training.app.feedback.rest.RestProxy;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.RequestEntity;
@@ -19,6 +20,7 @@ public class QuestionsServiceProxyController {
     this.questionsService = questionsService;
   }
 
+  @HystrixCommand
   @RequestMapping(value = "/questions/**", method = {RequestMethod.GET, RequestMethod.POST})
   public ResponseEntity<String> proxy(RequestEntity<String> request) {
     return questionsService.proxy(request);

@@ -4,6 +4,7 @@ import com.cloudcredo.microservices.training.app.feedback.context.MicroservicesC
 import com.cloudcredo.microservices.training.app.feedback.context.RedisContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.sleuth.Sampler;
 import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableHystrix
 public class FeedbackApplication {
 
   @Bean
