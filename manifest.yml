@@ -5,6 +5,7 @@ applications:
   no-route: true
   path: ./request-data
   command: bundle exec ./worker
+  instances: 2
   services:
   - async-redis
 
