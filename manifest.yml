@@ -2,7 +2,7 @@
 applications:
 - name: feedback
   memory: 256M
-  path: ./build/libs/feedback-0.2.0-SNAPSHOT.jar
+  path: ./feedback/build/libs/feedback-0.2.0-SNAPSHOT.jar
   random-route: true
 
 services:
