@@ -1,8 +1,14 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3>Output from your microservice:</h3>
+    <h3>{{ microserviceData ? 'Output from your microservice:' : 'Hmm... nothing yet!' }}</h3>
   </div>
   <div class="panel-body">
-    <p>{{microserviceData}}</p>
+    <div ng-hide="microserviceData">
+      <p>Don't forget you'll need to run</p>
+      <pre>cf set-env feedback MY_MICROSERVICE_URL &lt;your microservice url&gt;
+cf restage feedback</pre>
+      <p>to tell the feedback app's API gateway where to find your microservice</p>
+    </div>
+    <p ng-show="microserviceData">{{microserviceData}}</p>
   </div>
 </div>

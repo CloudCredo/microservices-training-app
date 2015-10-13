@@ -10,10 +10,12 @@ angular.module('myMicroservice', [])
 
   .controller('MyMicroserviceController', function ($scope, $timeout, MyMicroserviceService) {
     (function fetchData() {
-      $scope.microserviceData = MyMicroserviceService.getData();
+      MyMicroserviceService.getData().$promise.then(function (data) {
+        $scope.microserviceData = data;
+      });
 
       $timeout(fetchData, 5000);
-    })()
+    })();
   })
 
   .service('MyMicroserviceService', function ($resource) {
@@ -21,7 +23,7 @@ angular.module('myMicroservice', [])
 
     return {
       getData: function () {
-        myMicroservice.get();
+        return myMicroservice.get();
       }
     }
   });
