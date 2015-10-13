@@ -1,14 +1,14 @@
 ---
 applications:
 - name: questions
-  memory: 512M
+  memory: 256M
   path: ./questions/build/libs/questions-0.3.0-SNAPSHOT.jar
   random-route: true
   services:
   - questions-redis
 
 - name: feedback
-  memory: 512M
+  memory: 256M
   path: ./feedback/build/libs/feedback-0.3.0-SNAPSHOT.jar
   random-route: true
   env:
