@@ -2,6 +2,7 @@ package com.cloudcredo.microservices.training.app.questions.persistence;
 
 import com.cloudcredo.microservices.training.app.questions.core.Answer;
 import com.cloudcredo.microservices.training.app.questions.core.Question;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -32,6 +33,7 @@ class RedisQuestionAndAnswersPersistenceService implements QuestionAndAnswersPer
   }
 
   @Override
+  @HystrixCommand
   public Question saveQuestion(Question question) {
     final long nextId = stringRedisTemplate.opsForValue().increment(NEXT_QUESTION_ID_KEY, 1);
     question = new Question(nextId, question);
@@ -44,6 +46,7 @@ class RedisQuestionAndAnswersPersistenceService implements QuestionAndAnswersPer
   }
 
   @Override
+  @HystrixCommand
   public List<Question> getAllQuestions() {
     // Assuming here that our set of questions is small enough to fit into memory!
     List<String> allQuestionKeys = stringRedisTemplate.opsForList().range(ALL_QUESTION_KEYS_KEY, 0, -1);
@@ -54,11 +57,13 @@ class RedisQuestionAndAnswersPersistenceService implements QuestionAndAnswersPer
   }
 
   @Override
+  @HystrixCommand
   public void saveAnswer(Answer answer) {
     answerRedisTemplate.opsForList().rightPush(answerKey(answer), answer);
   }
 
   @Override
+  @HystrixCommand
   public List<Answer> getAnswersToQuestion(long questionId) {
     return answerRedisTemplate.opsForList().range(answerKey(questionId), 0, -1);
   }

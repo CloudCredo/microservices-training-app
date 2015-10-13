@@ -1,6 +1,7 @@
 package com.cloudcredo.microservices.training.app.feedback.core;
 
 import com.cloudcredo.microservices.training.app.feedback.persistence.FeedbackPersistenceService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ class FeedbackServiceImpl implements FeedbackService {
   }
 
   @Override
+  @HystrixCommand
   public AggregatedFeedback getAggregatedFeedback() {
     return feedbackPersistenceService.getAggregatedFeedback();
   }
 
   @Override
+  @HystrixCommand
   public void storeFeedback(Feedback feedback) {
     logger.info("Storing new feedback: {}", feedback);
     feedbackPersistenceService.saveFeedback(feedback);
