@@ -1,6 +1,6 @@
-package com.cloudcredo.microservices.training.app.api;
+package com.cloudcredo.microservices.training.app.feedback.api;
 
-import com.cloudcredo.microservices.training.app.core.*;
+import com.cloudcredo.microservices.training.app.feedback.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

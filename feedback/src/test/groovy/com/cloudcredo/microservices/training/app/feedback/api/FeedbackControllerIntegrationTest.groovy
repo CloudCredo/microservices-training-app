@@ -1,6 +1,6 @@
-package com.cloudcredo.microservices.training.app.api
+package com.cloudcredo.microservices.training.app.feedback.api
 
-import com.cloudcredo.microservices.training.app.FeedbackApplication
+import com.cloudcredo.microservices.training.app.feedback.FeedbackApplication
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.boot.test.TestRestTemplate

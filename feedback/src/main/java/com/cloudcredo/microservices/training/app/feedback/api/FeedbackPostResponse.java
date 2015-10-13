@@ -1,4 +1,4 @@
-package com.cloudcredo.microservices.training.app.api;
+package com.cloudcredo.microservices.training.app.feedback.api;
 
 class FeedbackPostResponse {
   private final String status;
