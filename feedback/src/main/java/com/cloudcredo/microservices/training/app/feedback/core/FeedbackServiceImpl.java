@@ -1,6 +1,6 @@
-package com.cloudcredo.microservices.training.app.core;
+package com.cloudcredo.microservices.training.app.feedback.core;
 
-import com.cloudcredo.microservices.training.app.persistence.FeedbackPersistenceService;
+import com.cloudcredo.microservices.training.app.feedback.persistence.FeedbackPersistenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

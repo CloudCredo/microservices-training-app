@@ -1,4 +1,4 @@
-package com.cloudcredo.microservices.training.app.context;
+package com.cloudcredo.microservices.training.app.feedback.context;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

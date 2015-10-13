@@ -1,9 +1,9 @@
-package com.cloudcredo.microservices.training.app.persistence;
+package com.cloudcredo.microservices.training.app.feedback.persistence;
 
-import com.cloudcredo.microservices.training.app.core.AggregatedFeedback;
-import com.cloudcredo.microservices.training.app.core.Feedback;
-import com.cloudcredo.microservices.training.app.core.HappinessLevel;
-import com.cloudcredo.microservices.training.app.core.LearningLevel;
+import com.cloudcredo.microservices.training.app.feedback.core.AggregatedFeedback;
+import com.cloudcredo.microservices.training.app.feedback.core.Feedback;
+import com.cloudcredo.microservices.training.app.feedback.core.HappinessLevel;
+import com.cloudcredo.microservices.training.app.feedback.core.LearningLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;

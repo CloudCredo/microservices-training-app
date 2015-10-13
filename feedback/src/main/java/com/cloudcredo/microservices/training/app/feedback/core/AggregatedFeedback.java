@@ -1,4 +1,4 @@
-package com.cloudcredo.microservices.training.app.core;
+package com.cloudcredo.microservices.training.app.feedback.core;
 
 import java.util.Map;
 
