@@ -10,8 +10,30 @@ angular.module('asyncWorkers', ['chart.js'])
 
   .controller('AsyncWorkersController', function ($scope, $timeout, AsyncWorkersService) {
     (function updateData() {
-      function updateRequestMetadata(data) {
-        $scope.requestData = data.requests;
+      function updateRequestMetadata(requests) {
+        function interestingPaths(path) {
+          return path.search(/bower|templates|js|favicon/) === -1 && path !== '/';
+        }
+
+        var methods = Object.keys(requests);
+
+        var allPaths = Object.keys(methods.reduce(function (paths, method) {
+          Object.keys(requests[method]).forEach(function (path) {
+            paths[path] = null;
+          });
+
+          return paths;
+        }, {})).filter(interestingPaths).sort();
+
+        var chartData = methods.map(function (method) {
+          return allPaths.map(function (path) {
+            return requests[method][path] || 0;
+          });
+        });
+
+        $scope.requestTypeChartData = chartData;
+        $scope.requestTypeChartLabels = allPaths;
+        $scope.requestTypeChartSeries = methods;
       }
 
       function updateRequestRateChart(data) {
@@ -23,13 +45,22 @@ angular.module('asyncWorkers', ['chart.js'])
           return workerData.requestRate;
         }
 
-        $scope.requestRateChartLabels = data.workers.map(toWorkerName);
-        $scope.requestRateChartData = data.workers.map(toRequestRate);
+        function byWorkerName(workerA, workerB) {
+          return workerA.name.localeCompare(workerB.name)
+        }
+
+        data = data.sort(byWorkerName);
+
+        $scope.requestRateChartLabels = data.map(toWorkerName);
+        $scope.requestRateChartData = [data.map(toRequestRate)];
+
+        console.log($scope.requestRateChartLabels);
+        console.log($scope.requestRateChartData);
       }
 
       AsyncWorkersService.getData().$promise.then(function (response) {
-        updateRequestMetadata(response.data);
-        updateRequestRateChart(response.data);
+        updateRequestMetadata(response.requests);
+        updateRequestRateChart(response.workers);
 
         $timeout(updateData, 5000)
       });

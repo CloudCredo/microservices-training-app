@@ -1,11 +1,23 @@
 <div id="question-form" class="row">
   <h3>API Request Info</h3>
   <div class="container">
-    <div class="row">
-  
-    </div>
-    <div class="row">
-      <chart-bar chart-data="requestRateChartData" labels="requestRateChartLabels"></chart-bar>
-    </div>
+    <canvas id="request-type-chart"
+            class="chart chart-bar"
+            chart-data="requestTypeChartData"
+            chart-labels="requestTypeChartLabels"
+            chart-series="requestTypeChartSeries"
+            chart-legend="false">
+    </canvas>
+  </div>
+
+  <h3>Worker Load</h3>
+  <div class="container">
+    <canvas id="request-rate-chart"
+            class="chart chart-bar"
+            chart-data="requestRateChartData"
+            chart-labels="requestRateChartLabels"
+            chart-series="['Requests per second']"
+            chart-legend="true">
+    </canvas>
   </div>
 </div>
