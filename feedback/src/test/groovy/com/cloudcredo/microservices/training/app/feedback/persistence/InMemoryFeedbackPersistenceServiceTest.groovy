@@ -3,8 +3,6 @@ package com.cloudcredo.microservices.training.app.feedback.persistence
 import com.cloudcredo.microservices.training.app.feedback.core.Feedback
 import com.cloudcredo.microservices.training.app.feedback.core.HappinessLevel
 import com.cloudcredo.microservices.training.app.feedback.core.LearningLevel
-import com.cloudcredo.microservices.training.app.feedback.persistence.FeedbackPersistenceService
-import com.cloudcredo.microservices.training.app.feedback.persistence.InMemoryFeedbackPersistenceService
 import spock.lang.Specification
 
 class InMemoryFeedbackPersistenceServiceTest extends Specification {
