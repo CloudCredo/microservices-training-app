@@ -1,10 +1,5 @@
 package com.cloudcredo.microservices.training.app.feedback.core
 
-import com.cloudcredo.microservices.training.app.feedback.core.AggregatedFeedback
-import com.cloudcredo.microservices.training.app.feedback.core.Feedback
-import com.cloudcredo.microservices.training.app.feedback.core.FeedbackServiceImpl
-import com.cloudcredo.microservices.training.app.feedback.core.HappinessLevel
-import com.cloudcredo.microservices.training.app.feedback.core.LearningLevel
 import com.cloudcredo.microservices.training.app.feedback.persistence.FeedbackPersistenceService
 import spock.lang.Specification
 
