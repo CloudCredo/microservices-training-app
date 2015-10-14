@@ -36,22 +36,8 @@ angular.module('asyncWorkers', ['chart.js'])
         $scope.requestTypeChartSeries = methods;
       }
 
-      function updateRequestRateChart(data) {
-        function toWorkerName(workerData) {
-          return workerData.name;
-        }
-
-        function toRequestRate(workerData) {
-          return workerData.requestRate;
-        }
-
-        $scope.requestRateChartLabels = data.map(toWorkerName);
-        $scope.requestRateChartData = data.map(toRequestRate);
-      }
-
       AsyncWorkersService.getData().$promise.then(function (response) {
         updateRequestMetadata(response.requests);
-        updateRequestRateChart(response.workers);
 
         $timeout(updateData, 5000)
       });
