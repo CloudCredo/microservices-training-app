@@ -4,7 +4,6 @@ import com.cloudcredo.microservices.training.app.feedback.FeedbackApplication
 import com.cloudcredo.microservices.training.app.feedback.core.HappinessLevel
 import com.cloudcredo.microservices.training.app.feedback.core.Feedback
 import com.cloudcredo.microservices.training.app.feedback.core.LearningLevel
-import com.cloudcredo.microservices.training.app.feedback.persistence.RedisFeedbackPersistenceService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.data.redis.core.RedisTemplate

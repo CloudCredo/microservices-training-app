@@ -22,7 +22,7 @@ public class MicroservicesContext {
   }
 
   @Bean
-  public RestProxy myMicroservice(@Value("${MY_MICROSERVICE_URL}") String url) {
+  public RestProxy myMicroservice(@Value("${MY_MICROSERVICE_URL:localhost}") String url) {
     return new RestProxy(URI.create("http://" + url), restTemplate);
   }
 

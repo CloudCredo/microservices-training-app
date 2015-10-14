@@ -1,9 +1,6 @@
 package com.cloudcredo.microservices.training.app.feedback.api
 
 import com.cloudcredo.microservices.training.app.feedback.FeedbackApplication
-import com.cloudcredo.microservices.training.app.feedback.api.FeedbackGetResponse
-import com.cloudcredo.microservices.training.app.feedback.api.FeedbackPostRequest
-import com.cloudcredo.microservices.training.app.feedback.api.FeedbackPostResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.SpringApplicationConfiguration
