@@ -10,11 +10,18 @@ require 'request_rate_logger'
 $stdout.sync = true
 trap(:INT) { exit }
 
+app_environment_id = JSON.parse(ENV.fetch('VCAP_APPLICATION')).fetch('space_id')
+app_instance_id = ENV.fetch('CF_INSTANCE_INDEX')
+
 redis = RedisClientFactory.create('async-redis')
 
 stdout_handler = StdoutHandler.new
-metadata_aggregator = MetadataAggregator.new(redis)
-request_rate_logger = RequestRateLogger.new(redis)
+metadata_aggregator = MetadataAggregator.new(redis, app_environment_id: app_environment_id)
+request_rate_logger = RequestRateLogger.new(
+    redis,
+    app_environment_id: app_environment_id,
+    app_instance_id: app_instance_id
+)
 
 subscriber = RedisSubscriber.new(redis)
 subscriber.subscribe('requestMetadata', stdout_handler)

@@ -2,8 +2,10 @@ require 'redis'
 require 'worker'
 
 class RequestRateLogger
-  def initialize(redis)
+  def initialize(redis, app_environment_id:, app_instance_id:)
     @redis = redis
+    @app_environment_id = app_environment_id
+    @app_instance_id = app_instance_id
   end
 
   def on_subscribe
@@ -16,9 +18,13 @@ class RequestRateLogger
 
   private
 
-  attr_reader :redis
+  attr_reader :redis, :app_environment_id, :app_instance_id
 
   def worker
-    @worker ||= Worker.this_worker(redis)
+    @worker ||= Worker.this_worker(
+      redis,
+      app_environment_id: app_environment_id,
+      app_instance_id: app_instance_id
+    )
   end
 end

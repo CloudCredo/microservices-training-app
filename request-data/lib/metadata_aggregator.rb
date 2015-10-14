@@ -1,7 +1,8 @@
 class MetadataAggregator
 
-  def initialize(redis)
+  def initialize(redis, app_environment_id:)
     @redis = redis
+    @app_environment_id = app_environment_id
     @aggregated_metadata = {}
   end
 
@@ -16,10 +17,10 @@ class MetadataAggregator
 
   private
 
-  attr_reader :aggregated_metadata, :redis
+  attr_reader :aggregated_metadata, :redis, :app_environment_id
 
   def increment(method, path)
-    key = "aggregatedMetadata:#{method}:#{path}"
+    key = "#{app_environment_id}:aggregatedMetadata:#{method}:#{path}"
     redis.incr(key)
   end
 
