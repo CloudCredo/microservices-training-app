@@ -1,8 +1,6 @@
 require 'sinatra'
 require 'json'
 
-require 'worker'
-
 class API < Sinatra::Base
 
   def initialize(redis)
@@ -22,8 +20,7 @@ class API < Sinatra::Base
 
   get '/request-data' do
     {
-      requests: request_data,
-      workers: worker_data
+      requests: request_data
     }.to_json
   end
 
@@ -43,20 +40,5 @@ class API < Sinatra::Base
       path_map[path] = redis.get(key).to_i
     end
   end
-
-
-  def worker_data
-    workers = Worker.all_workers(redis)
-
-    workers.each_with_object([]) do |worker, worker_data|
-      return worker_data unless worker.exists?
-
-      worker_data << {
-        name: worker.name,
-        requestRate: worker.requests_per_second
-      }
-    end
-  end
-
 
 end
