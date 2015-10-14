@@ -1,0 +1,34 @@
+<div id="aggregated-feedback" class="container">
+  <div class="row">
+    <h3>Thanks for voting!</h3>
+
+    <p>
+      There {{aggregatedFeedback.totalVotes === 1 ? 'has' : 'have'}} been
+      {{aggregatedFeedback.totalVotes}} vote{{aggregatedFeedback.totalVotes === 1 ? '' : 's'}}
+      cast so far
+    </p>
+  </div>
+
+  <div class="row">
+    <h4>Overall happiness</h4>
+
+    <div class="col-xs-2" ng-repeat="level in aggregatedFeedback.happinessLevels">
+      <justgage id="happiness-gauge-{{level.index}}"
+                title="{{level.description}}"
+                value="{{level.votePercentage}}"
+                level-colors="{{level.gaugeColours}}"
+                symbol="%"></justgage>
+    </div>
+  </div>
+  <div class="row">
+    <h4>Overall learning</h4>
+
+    <div class="col-xs-2" ng-repeat="level in aggregatedFeedback.learningLevels">
+      <justgage id="learning-gauge-{{level.index}}"
+                title="{{level.description}}"
+                value="{{level.votePercentage}}"
+                level-colors="{{level.gaugeColours}}"
+                symbol="%"></justgage>
+    </div>
+  </div>
+</div>
