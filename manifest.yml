@@ -17,14 +17,14 @@ applications:
   - async-redis
 
 - name: questions
-  memory: 256M
+  memory: 356M
   path: ./questions/build/libs/questions-0.8.0-SNAPSHOT.jar
   random-route: true
   services:
   - questions-redis
 
 - name: feedback
-  memory: 256M
+  memory: 356M
   path: ./feedback/build/libs/feedback-0.8.0-SNAPSHOT.jar
   random-route: true
   services:
