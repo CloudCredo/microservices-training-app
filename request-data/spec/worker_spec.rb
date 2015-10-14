@@ -7,9 +7,10 @@ RSpec.describe Worker do
 
   let(:redis) { instance_double(Redis, 'redis', get: nil, set: nil, sadd: nil, incr: nil) }
   let(:worker_instance_number) { '0' }
-  let(:worker_key_prefix) { "requestRateLogger:#{worker_instance_number}" }
+  let(:space_id) { 'space_id' }
+  let(:worker_key_prefix) { "#{space_id}:requestRateLogger:#{worker_instance_number}" }
 
-  subject(:worker) { Worker.new(redis, worker_key_prefix)}
+  subject(:worker) { Worker.new(redis, app_environment_id: space_id, worker_key_prefix: worker_key_prefix)}
 
   before(:all) do
     Timecop.freeze
@@ -18,7 +19,7 @@ RSpec.describe Worker do
 
   describe '#register' do
     it 'adds the worker to the set of all instances' do
-      expect(redis).to receive(:sadd).with('requestRateLogger:instances', worker_key_prefix)
+      expect(redis).to receive(:sadd).with('space_id:requestRateLogger:instances', worker_key_prefix)
       worker.register
     end
 
@@ -35,7 +36,7 @@ RSpec.describe Worker do
 
   describe '#deregister' do
     it 'removes the worker from the list of all instances' do
-      expect(redis).to receive(:srem).with('requestRateLogger:instances', worker_key_prefix)
+      expect(redis).to receive(:srem).with('space_id:requestRateLogger:instances', worker_key_prefix)
       worker.deregister
     end
   end
@@ -58,7 +59,7 @@ RSpec.describe Worker do
 
     context 'when the worker does not already exist' do
       it 'adds the worker to the set of all instances' do
-        expect(redis).to receive(:sadd).with('requestRateLogger:instances', worker_key_prefix)
+        expect(redis).to receive(:sadd).with('space_id:requestRateLogger:instances', worker_key_prefix)
         worker.increment_request_count
       end
 

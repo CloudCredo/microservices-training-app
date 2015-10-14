@@ -1,34 +1,46 @@
-class Worker
-  WORKER_INSTANCES_SET_KEY = 'requestRateLogger:instances'
+require 'json'
 
-  private_constant :WORKER_INSTANCES_SET_KEY
+class Worker
 
   class << self
-    def this_worker(redis)
-      Worker.new(redis, "requestRateLogger:#{ENV.fetch('CF_INSTANCE_INDEX')}")
+    def this_worker(redis, app_environment_id:, app_instance_id:)
+      Worker.new(
+          redis,
+          app_environment_id: app_environment_id,
+          worker_key_prefix: "#{app_environment_id}:requestRateLogger:#{app_instance_id}"
+      )
     end
 
-    def all_workers(redis)
-      redis.smembers(WORKER_INSTANCES_SET_KEY).map do |worker_key|
-        Worker.new(redis, worker_key)
+    def all_workers(redis, app_environment_id:)
+      redis.smembers(worker_instances_set_key(app_environment_id)).map do |worker_key|
+        Worker.new(
+            redis,
+            app_environment_id: app_environment_id,
+            worker_key_prefix: worker_key
+        )
       end
+    end
+
+    def worker_instances_set_key(app_environment_id)
+      "#{app_environment_id}:requestRateLogger:instances"
     end
   end
 
-  def initialize(redis, worker_key_prefix)
+  def initialize(redis, app_environment_id:, worker_key_prefix:)
     @redis = redis
+    @app_environment_id = app_environment_id
     @worker_key_prefix = worker_key_prefix
   end
 
   def register
-    redis.sadd(WORKER_INSTANCES_SET_KEY, worker_key_prefix)
+    redis.sadd(worker_instances_set_key, worker_key_prefix)
     redis.set("#{worker_key_prefix}:startTime", Time.now, ex: 60)
     redis.set("#{worker_key_prefix}:requestCount", 0)
     self
   end
 
   def deregister
-    redis.srem(WORKER_INSTANCES_SET_KEY, worker_key_prefix)
+    redis.srem(worker_instances_set_key, worker_key_prefix)
   end
 
   def name
@@ -61,5 +73,9 @@ class Worker
 
   private
 
-  attr_reader :redis, :worker_key_prefix
+  attr_reader :redis, :worker_key_prefix, :app_environment_id
+
+  def worker_instances_set_key
+    Worker.worker_instances_set_key(app_environment_id)
+  end
 end

@@ -5,8 +5,9 @@ require 'worker'
 
 class API < Sinatra::Base
 
-  def initialize(redis)
+  def initialize(redis, app_environment_id:)
     @redis = redis
+    @app_environment_id = app_environment_id
   end
 
   set :port, ENV['PORT']
@@ -29,24 +30,23 @@ class API < Sinatra::Base
 
   private
 
-  attr_reader :redis
+  attr_reader :redis, :app_environment_id
 
   def request_data
-    keys = redis.keys('aggregatedMetadata*')
+    keys = redis.keys("#{app_environment_id}:aggregatedMetadata*")
 
     keys.each_with_object({}) do |key, map|
       key_components = key.split(/:/)
-      method = key_components[1]
-      path = key_components[2]
+      method = key_components[2]
+      path = key_components[3]
       path_map = map.fetch(method, {})
       map[method] = path_map
       path_map[path] = redis.get(key).to_i
     end
   end
 
-
   def worker_data
-    workers = Worker.all_workers(redis)
+    workers = Worker.all_workers(redis, app_environment_id: app_environment_id)
 
     workers.each_with_object([]) do |worker, worker_data|
       return worker_data unless worker.exists?
