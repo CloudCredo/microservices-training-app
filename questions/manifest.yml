@@ -1,0 +1,8 @@
+---
+applications:
+- name: questions
+  memory: 256M
+  path: ./questions/build/libs/questions-0.6.0-SNAPSHOT.jar
+  host: ADD A UNIQUE ROUTE HERE
+  services:
+  - questions-redis
