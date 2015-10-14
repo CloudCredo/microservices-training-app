@@ -2,7 +2,6 @@ package com.cloudcredo.microservices.training.app.feedback.context;
 
 import com.cloudcredo.microservices.training.app.feedback.rest.RestProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,7 @@ public class MicroservicesContext {
   }
 
   @Bean
-  public RestProxy myMicroservice(@Value("${MY_MICROSERVICE_URL}") String url) {
+  public RestProxy myMicroservice(@Value("${MY_MICROSERVICE_URL:localhost}") String url) {
     return new RestProxy(URI.create("http://" + url), restTemplate);
   }
 

@@ -1,12 +1,6 @@
 package com.cloudcredo.microservices.training.app.feedback.api
 
-import com.cloudcredo.microservices.training.app.feedback.api.FeedbackController
-import com.cloudcredo.microservices.training.app.feedback.api.FeedbackPostRequest
-import com.cloudcredo.microservices.training.app.feedback.core.AggregatedFeedback
-import com.cloudcredo.microservices.training.app.feedback.core.Feedback
-import com.cloudcredo.microservices.training.app.feedback.core.FeedbackService
-import com.cloudcredo.microservices.training.app.feedback.core.HappinessLevel
-import com.cloudcredo.microservices.training.app.feedback.core.LearningLevel
+import com.cloudcredo.microservices.training.app.feedback.core.*
 import spock.lang.Specification
 
 class FeedbackControllerTest extends Specification {
