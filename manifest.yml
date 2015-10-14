@@ -26,8 +26,6 @@ applications:
   memory: 256M
   path: ./feedback/build/libs/feedback-0.5.0-SNAPSHOT.jar
   random-route: true
-  env:
-    MY_MICROSERVICE_URL: 'localhost' # Microservice bonus task!
   services:
   - questions
   - feedback-redis
